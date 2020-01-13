@@ -1,0 +1,24 @@
+# ----------------------------------------------------------
+# Named roles (for documentation and grouping)
+# The role keys are used by other resources to describe what role(s) are required
+# to interact with that resource given a specific action.
+# ----------------------------------------------------------
+roles:
+  roleDefs:
+    clusterAdmin:
+      metadata:
+        name: clusterAdmin
+        displayName: Cluster Admin
+        displayDescription: A user who has cluster administrator permissions.
+
+    namespaceAdmin:
+      metadata:
+        name: namespaceAdmin
+        displayName: Namespace Admin
+        displayDescription: A user who has namespace administrator permissions.
+
+    etcdAdmin:
+      metadata:
+        name: etcdAdmin
+        displayName: etcd Admin
+        displayDescription: A user who has the authority to administer etcd cluster instances.

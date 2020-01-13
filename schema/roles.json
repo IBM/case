@@ -1,0 +1,49 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "required": [
+    "roles"
+  ],
+  "properties": {
+    "roles": {
+      "$id": "#/properties/roles",
+      "type": "object",
+      "title": "Resources",
+      "description": "The resources schema",
+      "required": [
+        "roleDefs"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "roleDefs": {
+          "$id": "#/properties/roles/roleDefs",
+          "type": "object",
+          "title": "Role definitions",
+          "description": "The role definitions",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$" : {
+              "$id": "#/properties/roles/patternProperties",
+              "type": "object",
+              "title": "Roles",
+              "description": "Roles",
+              "required": [
+                "metadata"
+              ],
+              "properties": {
+                "metadata": {
+                  "$ref": "metadata.json#/definitions/metadataRef"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

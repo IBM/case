@@ -1,0 +1,7 @@
+inventory:
+  metadata:
+    name: etcdRestoreExample
+    description:  Setup any namespace requirements
+  k8sScope: namespace
+
+

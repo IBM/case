@@ -1,0 +1,82 @@
+# Defines any external dependencies that are not directly supplied by this CASE
+# The dependencies are handled by dependency resolvers which evaluate the prerequiste
+# These values can be addressed canonically 
+prereqs:
+  prereqDefs:   
+    k8sResources:                       # Kubernetes resource instance resolver  # TODO:  Add label queries, namespace 
+      ibmRestrictedPSP:                 # boolean: true if present and accessible
+        kind: PodSecurityPolicy
+        apiGroup: policy
+        name: ibm-restricted-psp
+        version: v1beta1
+
+      etcdControllerPSP:   
+        kind: PodSecurityPolicy
+        apiGroup: policy
+        name:  etcd-contoller-psp
+        version: v1beta1
+
+      ibmRestrictedSCC:          
+        kind: SecurityContextConstraints
+        apiGroup: security.openshift.io
+        name: restricted
+        version: v1
+
+      etcdControllerSCC:
+        kind: SecurityContextConstraints
+        apiGroup: security.openshift.io
+        name:  etcd-contoller-scc
+        version: v1
+
+      pspClusterRole:
+        kind: ClusterRole
+        apiGroup: rbac.authorization.k8s.io
+        name: ibm-restricted-psp-etcd-cr
+        version: v1
+
+      workerIntelLinux:
+        kind: node
+        apiGroup: ""
+        version: v1
+        selector:
+          matchExpressions:
+          - {key: beta.kubernetes.io/arch, operator: In, values: [amd64]}
+          - {key: beta.kubernetes.io/os, operator: In, values: [linux]}
+          - {key: node-role.kubernetes.io/worker, operator: Exists}
+
+    k8sResourceVersions:                   # Kubernetes APIs and Resource types.
+      rbac:                                # boolean: true if present
+        kind: ClusterRole
+        apiGroup: rbac.authorization.k8s.io
+        version: v1
+      etcdCluster:
+        kind: EtcdCluster
+        apiGroup: etcd.database.coreos.com
+        version: v1beta2    
+      etcdBackup:
+        kind: EtcdBackup
+        apiGroup: etcd.database.coreos.com
+        version: v1beta2    
+      etcdRestore:
+        kind: EtcdRestore
+        apiGroup: etcd.database.coreos.com
+        version: v1beta2
+      
+    k8sDistros:                         # Kubernetes Distributions resolver
+      ibmCloud:                         # boolean: true if present and accessible
+        distribution: ibmCloud
+        semver: ">=1.11.3"
+      ibmCloudPrivate:
+        distribution: ibmCloudPrivate
+        semver: ">=1.11.3"
+      openshift:
+        distribution: openshift
+        semver: ">=1.11.3"
+      kubernetes:
+        distribution: kubernetes
+        semver: ">=1.11-0"
+
+    helm:                        # If this is here at all, it requires the Helm client to be installed.
+      helmV2: 
+        helmVersion: ">2.13.0"
+        tillerVersion: ">2.13.0"

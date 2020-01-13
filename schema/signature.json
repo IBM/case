@@ -1,0 +1,93 @@
+{
+  "definitions": {
+    "signatureRef": {
+      "$id": "#/definitions/signatureRef",
+      "type": "object",
+      "required": [
+        "certificate",
+        "chain"
+      ],
+      "properties": {
+        "certificate": {
+          "title": "Certificate",
+          "description": "The base64 encoded certificate",
+          "type": "string"
+        },
+        "chain": {
+          "title": "Chain",
+          "description": "The certificaate chain",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "description": "The root of the signature schema",
+  "required": [
+    "headers",
+    "data",
+    "x509Certificates",
+    "signature"
+  ],
+  "properties": {
+    "headers": {
+      "$id": "#/properties/headers",
+      "type": "object",
+      "title": "Headers",
+      "description": "The signature header",
+      "required": [
+        "alg",
+        "version"
+      ],
+      "properties": {
+        "alg": {
+          "$id": "#/properties/headers/alg",
+          "type": "string",
+          "title": "Algorithm",
+          "description": "The algorithm used to encrypt the signature."
+        },
+        "version": {
+          "$id": "#/properties/headers/version",
+          "type": "string",
+          "title": "Version",
+          "description": "The version of the CASE spec being used."
+        }
+      }
+    },
+    "data": {
+      "$id": "#/properties/data",
+      "type": "object",
+      "title": "Data",
+      "description": "The digest data for the signature.",
+      "required": [
+        "digest"
+      ],
+      "properties": {
+        "digest": {
+          "$id": "#/properties/data/digest",
+          "type": "string",
+          "title": "Digest",
+          "description": "The SHA-256 hash of the canonical JSON version of the CASE."
+        }
+      }
+    },
+    "x509Certificates": {
+      "$id": "#/properties/x509Certificates",
+      "type": "array",
+      "title": "x509 Certificates",
+      "description": "Array of base64-encoded certificates used for decrypting the signature.",
+      "items": {
+        "$ref": "#/definitions/signatureRef"
+      }
+    },
+    "signature": {
+      "$id": "#/properties/signature",
+      "type": "string",
+      "title": "Signature",
+      "description": "The digital signature for the CASE."
+    }
+  }
+}

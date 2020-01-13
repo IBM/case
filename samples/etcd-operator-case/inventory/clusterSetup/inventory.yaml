@@ -1,0 +1,12 @@
+# This file describes the contents of an inventory item, which can contain multiple artificats
+inventory:
+  metadata:
+    # Must match the parent inventory directory.
+    name: clusterSetup
+
+    # Human readable description
+    description:  The cluster resources required before installing.
+
+  # The Kubernetes scope that this item applies to.  Can be:  "cluster" or "namespace"
+  k8sScope: cluster
+

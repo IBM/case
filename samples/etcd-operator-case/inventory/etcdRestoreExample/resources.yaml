@@ -1,0 +1,5 @@
+resources:
+  resourceDefs:    
+    files:
+    - ref: etcdRestoreExample.yaml
+      mediaType: application/vnd.case.resource.k8s.v1+yaml

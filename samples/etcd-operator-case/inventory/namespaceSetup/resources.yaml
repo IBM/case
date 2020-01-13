@@ -1,0 +1,16 @@
+resources:
+  metadata:
+    name: namespaceSetup
+    displayName: Namespace Setup
+    displayDescription: etcd resources that require a namespace admin
+  resourceDefs:
+    files:
+    - ref: namespace.yaml
+      mediaType: application/vnd.case.resource.k8s.v1+yaml
+    - ref: rolebinding.yaml
+      mediaType: application/vnd.case.resource.k8s.v1+yaml
+    - ref: service-account.yaml
+      mediaType: application/vnd.case.resource.k8s.v1+yaml
+    - ref: scc.sh
+      mediaType: application/vnd.case.resource.script.bash.v1
+    

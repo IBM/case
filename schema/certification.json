@@ -1,0 +1,141 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "description": "The root of the certification schema",
+  "required": [
+    "certification"
+  ],
+  "properties": {
+    "certification": {
+      "$id": "#/properties/certification",
+      "title": "Certification",
+      "description": "The certification schema",
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "issueDate",
+        "expirationDate",
+        "terms",
+        "provider"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "id": {
+          "$id": "#/definitions/ibmCertRef/properties/id",
+          "type": "string",
+          "title": "Certification identifier",
+          "description": "The identifier of the certification",
+          "default": "",
+          "examples": [
+            "75b05dfb-8988-4caa-8a6c-36f8ae5fe211"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "provider": {
+          "$id": "#/definitions/ibmCertRef/properties/provider",
+          "type": "string",
+          "title": "Certification provider",
+          "description": "The certification provider identifier. A provider must be unique by vendor or certification authority",
+          "default": "",
+          "examples": [
+            "ibm"
+          ]
+        },
+        "type": {
+          "$id": "#/definitions/ibmCertRef/properties/type",
+          "type": "string",
+          "title": "Certification type",
+          "description": "The type of certification.",
+          "default": "",
+          "examples": [
+            "ccp",
+            "cc",
+            "mc"
+          ]
+        },
+        "issueDate": {
+          "type": "string",
+          "title": "Certification issue date",
+          "description": "The date in which the certification was issued in the format MM/DD/YYYY",
+          "default": "",
+          "examples": [
+            "03/01/2019",
+            "12/01/2019"
+          ],
+          "pattern": "^([1-9]|0[1-9]|1[012])/([1-9]|0[1-9]|[12][0-9]|3[01])/20[0-9]{2}$"
+        },
+        "expirationDate": {
+          "$id": "#/definitions/ibmCertRef/properties/expirationDate",
+          "title": "Certification expiration date",
+          "description": "The date in which the certification expires in the format MM/DD/YYYY",
+          "default": "",
+          "examples": [
+            "02/28/2020",
+            "12/31/202"
+          ],
+          "pattern": "^([1-9]|0[1-9]|1[012])/([1-9]|0[1-9]|[12][0-9]|3[01])/20[0-9]{2}$"
+        },
+        "terms": {
+          "$id": "#/definitions/ibmCertRef/properties/terms",
+          "type": "string",
+          "title": "Certification terms",
+          "description": "The terms of this certification.",
+          "default": "",
+          "examples": [
+            "Valid from date of issue. Security vulnerability management and enhancements are delivered on the latest version of the chart and images"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "exceptions": {
+          "$id": "#/definitions/ibmCertRef/properties/exceptions",
+          "type": "array",
+          "title": "Certification exceptions",
+          "description": "An array of exception(s) granted during certification",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "description",
+              "remediation"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/definitions/ibmCertRef/exceptions/properties/id",
+                "title": "Exception identifier",
+                "description": "Unique string identifier for exception assigned during certification",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "12345"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "description": {
+                "$id": "#/definitions/ibmCertRef/exceptions/properties/description",
+                "title": "Exception description",
+                "description": "The description of the exception for documentation",
+                "type": "string",
+                "default": "",
+                "pattern": "^(.*)$"
+              },
+              "remediation": {
+                "$id": "#/definitions/ibmCertRef/exceptions/properties/remediation",
+                "title": "Exception remediation plan",
+                "description": "The planned remediation of the exception for documentation",
+                "type": "string",
+                "default": "",
+                "pattern": "^(.*)$"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+
+resources:
+  metadata:
+    name: etcdOperators
+    displayName: etcd Resources
+    displayDescription: etcd Resources that require a cluster admin to create.
+  resourceDefs:
+    helmCharts:
+    - metadata:
+        name: etcdOperatorChart
+        displayName: CoreOS etcd-operator Helm chart for Kubernetes
+      chart: etcd-operator
+      version: 0.10.2
+      mediaType: application/vnd.case.resource.helm.chart.v1
+      repositoryURLs:
+      - https://kubernetes-charts.storage.googleapis.com
+    containerImages:
+      - image: coreos/etcd-operator
+        mediaType: application/vnd.oci.image.manifest.v1
+        digest: sha256:66a37fd61a06a43969854ee6d3e21087a98b93838e284a6086b13917f96b0d9b
+        tag: v0.9.4
+        platform:
+          architecture: amd64
+          os: linux
+        registries:
+        - host: quay.io
+      - image: coreos/etcd
+        mediaType: application/vnd.oci.image.manifest.v1
+        digest: sha256:06520f89439cb7edf4fb921f90e2b4494db3cc5bb61969078dc3e375602a047b
+        tag: v3.2.25
+        platform:
+          architecture: amd64
+          os: linux
+        registries:
+        - host: quay.io

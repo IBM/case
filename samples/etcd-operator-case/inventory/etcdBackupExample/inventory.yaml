@@ -1,0 +1,6 @@
+inventory:
+  metadata:
+    name: etcdBackupExample
+    description: Backup an etcd cluster
+  k8sScope: namespace
+

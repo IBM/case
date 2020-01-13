@@ -1,0 +1,95 @@
+
+actions:
+  metadata:
+    name: namespaceSetup
+    description: Setup any namespace requirements
+
+  actionDefs:
+    configure:
+      metadata :
+        name: configure
+        description: Setup the namespace 
+      roles: 
+      - namespaceAdmin
+
+      # Requires the prerequisite Kubernetes version and the amd64 Linux operating system
+      requires:
+        and:
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - or:
+          - and: 
+            - "!":
+              - "/case/prereqs/k8sDistros/openshift"
+            - or: 
+              - "/case/prereqs/k8sResources/ibmRestrictedPSP"
+              - "/case/prereqs/k8sResources/etcdControllerPSP"
+              - "/case/prereqs/k8sResources/pspClusterRole"
+          - and: 
+            - "/case/prereqs/k8sDistros/openshift"
+            - or:
+              - "/case/prereqs/k8sResources/ibmRestrictedSCC"
+              - "/case/prereqs/k8sResources/etcdControllerSCC"
+
+      k8sPermissions:
+        rules:
+        - rule: 
+            group: ""
+            resource: "namespaces"
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+        - rule: 
+            group: "extensions"
+            resource: "networkpolicies"
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+        - rule: 
+            group: ""
+            resource: "serviceaccounts"
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+    remove:
+      metadata :
+        name: remove
+        description: Undo the namespace setup configuration
+      roles: 
+      - namespaceAdmin
+
+      # Requires the prerequisite Kubernetes version and the amd64 Linux operating system
+      requires:
+        and:
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+
+      k8sPermissions:
+        rules:
+        - rule: 
+            group: ""
+            resource: "namespaces"
+            verbs:
+            - '*'
+        - rule: 
+            group: "extensions"
+            resource: "networkpolicies"
+            verbs:
+            - '*'
+        - rule: 
+            group: ""
+            resource: "serviceaccounts"
+            verbs:
+            - '*'

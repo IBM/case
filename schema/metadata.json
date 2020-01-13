@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "definitions": {
+    "metadataRef": {
+      "$id": "#/definitions/metadataRef",
+      "title": "Metadata reference",
+      "description": "Various properties applicable to an object",
+      "type":"object",
+      "properties": {
+        "specVersion": {
+          "title": "Specification version",
+          "description": "The version of the specification this object implements.",
+          "type": "string",
+          "default": "1.0.0",
+          "examples": [
+            "1.0.0"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "name": {
+          "title": "Name",
+          "description": "The name of the object for use in api addressibility",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "myResourceName"
+          ],
+          "pattern": "^[a-z_$][A-Za-z0-9_$]{0,49}$"
+        },
+        "description": {
+          "title": "Description",
+          "description": "The description of the object for use as internal documentation",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "This is my resource"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "displayName": {
+          "title": "Display name",
+          "description": "The name of this object to be displayed to a user interface",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "My Resource"
+          ],
+          "pattern": "^(.*){1,20}$"
+        },
+        "displayDescription": {
+          "title": "Display description",
+          "description": "The description of this object to be displayed to a user interface",
+          "type": "string",
+          "default": "",
+          "examples": [
+            "This is my resource which has some interesting information."
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}

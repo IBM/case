@@ -1,0 +1,227 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "Root schema",
+  "description": "The root of the actions schema",
+  "required": [
+    "actions"
+  ],
+  "properties": {
+    "actions": {
+      "$id": "#/properties/actions",
+      "type": "object",
+      "title": "Actions",
+      "description": "Contains the action definitions for the inventory item",
+      "required": [
+        "actionDefs"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        }, 
+        "actionDefs": {
+          "$id": "#/properties/actions/actionDefs",
+          "type": "object",
+          "title": "Action definitions",
+          "description": "Defines the actions for the inventory item.",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "type": "object",
+              "title": "Action",
+              "description": "Defines an action for the inventory item",
+              "required": [
+                "roles",
+                "k8sPermissions"
+              ],
+              "properties": {
+                "metadata ": {
+                  "$ref": "metadata.json#/definitions/metadataRef"
+                },
+                "roles": {
+                  "$id": "#/properties/actions/properties/roles",
+                  "type": "array",
+                  "title": "Action roles",
+                  "description": "The CASE roles that apply to this action",
+                  "items": {
+                    "$id": "#/properties/actions/properties/roles/items",
+                    "type": "string",
+                    "title": "Action role schema",
+                    "description": "Describes a CASE role that applies to this action",
+                    "default": "",
+                    "examples": [
+                      "etcdAdmin"
+                    ],
+                    "pattern": "^(.*)$"
+                  }
+                },
+                "requires": {
+                  "$id": "#/properties/actions/properties/requires",
+                  "title": "Required prerequsites",
+                  "description": "The CASE prerequisites that apply to this action",
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "array"
+                    },
+                    {
+                      "type": "object"
+                    }
+                  ],
+                  "additionalProperties": true
+      },
+                "k8sPermissions": {
+                  "$id": "#/properties/actions/properties/k8sPermissions",
+                  "type": "object",
+                  "title": "Kubernetes permission rules",
+                  "description": "The Kubernetes permissions that apply to this action",
+                  "required": [
+                    "rules"
+                  ],
+                  "properties": {
+                    "rules": {
+                      "$id": "#/properties/actions/properties/k8sPermissions/properties/rules",
+                      "type": "array",
+                      "title": "Kubernetes API permissions",
+                      "description": "The Kubernetes API permissions to be used with the SubjectAccessReview API, also known as the can-i authorization commmand",
+                      "items": {
+                        "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items",
+                        "type": "object",
+                        "title": "Kubernetes permissions items schema",
+                        "description": "The Kubernetes API permissions",
+                        "required": [
+                          "rule"
+                        ],
+                        "properties": {
+                          "ifExpression": {
+                            "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/ifExpression",
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "array"
+                              },
+                              {
+                                "type": "object"
+                              }
+                            ],
+                            "additionalProperties": true
+                          },
+                          "rule": {
+                            "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule",
+                            "type": "object",
+                            "title": "Kubernetes permissions item rule",
+                            "description": "The Kubernetes API Permissions to be used with the SubjectAccessReview API, also known as the can-i authorization commmand",
+                            "required": [
+                              "group",
+                              "resource",
+                              "verbs"
+                            ],
+                            "properties": {
+                              "group": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/group",
+                                "type": "string",
+                                "title": "Kubernetes APIGroup",
+                                "description": "The Kubernetes APIGroup for the resource",
+                                "default": "",
+                                "examples": [
+                                  "extensions",
+                                  "",
+                                  "policy"
+                                ],
+                                "pattern": "^(.*)$"
+                              },
+                              "resource": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/resource",
+                                "type": "string",
+                                "title": "Kubernetes resource",
+                                "description": "One of the existing resource types. \"*\" means all. (required)",
+                                "default": "",
+                                "examples": [
+                                  "EtcdBackup"
+                                ],
+                                "pattern": "^(.*)$"
+                              },
+                              "subresource": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/subresource",
+                                "type": "string",
+                                "title": "Kubernetes subresource",
+                                "description": "One of the existing subresource types. \"\" means none. (optional)",
+                                "default": "",
+                                "examples": [
+                                  "status"
+                                ],
+                                "pattern": "^(.*)$"
+                              },
+                              "verbs": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/verbs",
+                                "type": "array",
+                                "items": {
+                                  "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/verbs/items",
+                                  "type": "string",
+                                  "title": "Kubernetes verb",
+                                  "description": "A kubernetes resource API verb, like: get, list, watch, create, update, delete, proxy. \"*\" means all. (required)",
+                                  "default": "",
+                                  "examples": [
+                                    "*",
+                                    "get",
+                                    "watch"
+                                  ],
+                                  "pattern": "^(.*)$"
+                                }
+                              },
+                              "name": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/name",
+                                "type": "string",
+                                "title": "Resource name",
+                                "description": "The name of the resource being requested. \"\" (empty) means all. (optional)",
+                                "default": "",
+                                "examples": [
+                                  "myResource"
+                                ],
+                                "pattern": "^(.*)$"
+                              },
+                              "namespace": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/namespace",
+                                "type": "string",
+                                "title": "Resource namespace",
+                                "description": "The namespace of the action being requested. (Optional, default=all)",
+                                "default": "",
+                                "examples": [
+                                  "myResource"
+                                ],
+                                "pattern": "^(.*)$"
+                              },
+                              "version": {
+                                "$id": "#/properties/actions/properties/k8sPermissions/properties/rules/items/rule/properties/version",
+                                "type": "string",
+                                "title": "Resource version",
+                                "description": "The version of the resource. (Optional, default='*')",
+                                "default": "'*'",
+                                "examples": [
+                                  "*",
+                                  "v1",
+                                  "v1beta1"
+                                ],
+                                "pattern": "^(.*)$"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
