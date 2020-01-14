@@ -65,7 +65,7 @@ Steps involved:
 1. Concatonate all YAML files into a single file.
 2. Convert this file to be a canonical JSON form file.
 3. Create a digest of the canonical using SHA-256 encoding.
-4. Add this digest to the data property of `signataure.yaml`.
+4. Add this digest to the data property of `signature.yaml`.
 5. Create a hashsum of the headers, digest, expiration date, and x509 certificates. This is the signature.
 6. Add this signature to `signature.yaml`.    
 

@@ -24,13 +24,13 @@ CASE Name    = The case.name / CASE directory name
 ### Archive contents
 The root directory of the archive must be the CASE folder.  
 
-Example, to create a CASE archive of the `mydatabase` CASE, version 1.0.0+20191113.1530.cve2019-1234:
+Example, to create a CASE archive of the `mydatabase` CASE, version 1.0.0+20191113.1530.cve2019-1234 (with a consistent hash):
 ```
 > cd /tmp/mycases
 > ls -1
 myapp
 mydatabase
-> tar -czf mydatabase-1.0.0+20191113.1530.cve2019-1234.tgz mydatabase/
+> tar -cf - mydatabase/ | gzip -nc > mydatabase-1.0.0+20191113.1530.cve2019-1234.tgz
 > ls -1
 myapp
 mydatabase
