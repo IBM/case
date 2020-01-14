@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "definitions": {
+    "logicalOps": {
+      "$id" : "#/definitions/logicalOps",
+      "title": "Logical grammar",
+      "description": "A logical expression of either unary or binary origin",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^(and|or|!)$"
+      },
+      "patternProperties": {
+        "^(and|or)$": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/logicalOps"
+              },
+              {
+                "$ref": "#/definitions/resolution"
+              }
+            ]
+          }
+        },
+        "^(!)$": {
+          "type": "array",
+          "maxItems": 1,
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/logicalOps"
+              },
+              {
+                "$ref": "#/definitions/resolution"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "resolution": {
+      "title": "JSON pointer",
+      "description": "A JSON pointer defines a string syntax for identifying a specific value with a JSON document",
+      "$id": "#/definitions/resolution",
+      "default": "",
+      "examples": [
+        "/case/prereqs/k8sDistros/openshift",
+        "/case/prereqs/k8sResources/etcdControllerPSP"
+      ],
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^(\/[a-z$_][a-zA-Z0-9_$]*)*$"
+        },
+        {
+          "type": "boolean"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+inventory:
+  # This is the main Operator runtime, which includes namespace-scoped operator.
+  metadata: 
+    name: etcdOperators 
+    displayName: etcd Operators
+    displayDescription:  Install the etcd operator Helm Chart
+  k8sScope: namespace

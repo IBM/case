@@ -1,0 +1,387 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "description": "The root of the prereqs schema",
+  "required": [
+    "resources"
+  ],
+  "properties": {
+    "resources": {
+      "$id": "#/properties/resources",
+      "type": "object",
+      "title": "Resources",
+      "description": "The resources schema",
+      "required": [
+        "resourceDefs"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "resourceDefs": {
+          "$id": "#/properties/resources/resourceDefs",
+          "type": "object",
+          "title": "Resource definitions",
+          "description": "The resource definitions",
+          "properties": {
+            "cases": {
+              "$id": "#/properties/resources/properties/cases",
+              "title": "CASE references",
+              "description": "CASE references",
+              "type": "array",
+              "required": [
+                "case"
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "$ref": "metadata.json#/definitions/metadataRef"
+                  },
+                  "mediaType": {
+                    "$id": "#/properties/resources/properties/cases/mediaType",
+                    "type":"string",
+                    "title": "Media type",
+                    "description": "Media Type (MIME) of the resource.",
+                    "default": "application/vnd.case.core.v1"
+                  },
+                  "case": {
+                    "$id": "#/properties/resources/properties/cases/case",
+                    "title": "CASE name",
+                    "description": "Reference to the CASE (the case name).",
+                    "type": "string"
+                  },
+                  "version": {
+                    "$id": "#/properties/resources/properties/cases/mediaType",
+                    "title": "CASE version",
+                    "description": "The version of the CASE",
+                    "type": "string"
+                  },
+                  "repositoryURLs": {
+                    "$id": "#/properties/resources/properties/cases/repositoryURLs",
+                    "title": "CASE repository URL",
+                    "description": "CASE repository URLs",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["case"]
+              }
+            },
+            "helmCharts": {
+              "$id": "#/properties/resources/properties/helmCharts",
+              "title": "Helm chart references",
+              "description": "Helm chart references",
+              "type": "array",
+              "required": [
+                "chart"
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "$ref": "metadata.json#/definitions/metadataRef"
+                  },
+                  "mediaType": {
+                    "$id": "#/properties/resources/properties/helmCharts/mediaType",
+                    "type":"string",
+                    "title": "Media type",
+                    "description": "Media Type (MIME) of the resource.",
+                    "default": "application/vnd.case.resource.helm.chart.v1"
+                  },
+                  "chart": {
+                    "$id": "#/properties/resources/properties/helmCharts/chart",
+                    "title": "Chart name",
+                    "description": "The name of the chart.",
+                    "type": "string"
+                  },
+                  "version": {
+                    "$id": "#/properties/resources/properties/helmCharts/version",
+                    "title": "Chart version",
+                    "description": "The version of the chart.",
+                    "type": "string"
+                  },
+                  "repositoryURLs": {
+                    "$id": "#/properties/resources/properties/helmCharts/repositoryURLs",
+                    "title": "Helm repository URLs",
+                    "description": "Helm repository URLs",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["chart"]
+              }
+            },
+            "files": {
+              "$id": "#/properties/resources/properties/files",
+              "title": "Files",
+              "description": "Other embedded files",
+              "type": "array",
+              "required": [
+                "ref"
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "$ref": "metadata.json#/definitions/metadataRef"
+                  },
+                  "mediaType": {
+                    "$id": "#/properties/resources/properties/files/mediaType",
+                    "type":"string",
+                    "title": "Media type",
+                    "description": "Media Type (MIME) of the resource.",
+                    "default": "text/plain"
+                  },
+                  "ref": {
+                    "$id": "#/properties/resources/properties/files/ref",
+                    "title": "File name reference",
+                    "description": "The file name reference in the files directory.",
+                    "type": "string"
+                  }
+                },
+                "required": ["ref"]
+              }
+            },
+            "containerImages": {
+              "$id": "#/properties/resources/properties/resourceDefs/properties/containerImages",
+              "title": "Container images",
+              "description": "A list of image references",
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": [
+                  "image",
+                  "mediaType"
+                ],
+                "properties": {
+                  "metadata": {
+                    "$ref": "metadata.json#/definitions/metadataRef"
+                  },
+                  "mediaType": {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/mediaType"
+                  },
+                  "image": {
+                    "$id": "#/properties/resources/properties/resourceDefs/properties/containerImages/image",
+                    "title": "Image",
+                    "description": "The container image name",
+                    "type": "string"
+                  },
+                  "digest": {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/digest"
+                  },
+                  "platform": {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/platform"
+                  },
+                  "manifests": {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/manifests"
+                  },
+                  "tag": {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/tag"
+                  },
+                  "registries": {
+                    "$id": "#/properties/resources/properties/resourceDefs/properties/containerImages/registries",
+                    "title": "Registry addresses",
+                    "description": "A list of image locations",
+                    "type": "array",
+                    "minItems": 1,
+                    "uniqueItems": true,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "host": {
+                          "title": "Registry Address",
+                          "description": "The address of the registry, in host or host:port format",
+                          "type": "string",
+                          "default": "docker.io",
+                          "examples": [
+                            "docker.io",
+                            "registry.access.redhat.com",
+                            "quay.io",
+                            "cp.icr.io"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                },
+                "allOf": [
+                  {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/rulePlatformReq"
+                  },
+                  {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/ruleManifestsReq"
+                  },
+                  {
+                    "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/ruleDigestorTagReq"
+                  }
+                ]
+              },
+              "definitions": {
+                "tag": {
+                  "title": "Tag",
+                  "description": "The image tag",
+                  "type": "string"
+                },
+                "digest": {
+                  "title": "Digest",
+                  "description": "Content addressable digest of the image in OCI format",
+                  "type": "string",
+                  "examples": [
+                    "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+                  ]
+                },
+                "mediaType": {
+                  "type": "string",
+                  "title": "MIME Type",
+                  "description": "Media Type (MIME) of the resource.",
+                  "default": "application/vnd.oci.image.manifest.v1",
+                  "examples": [
+                    "application/vnd.oci.image.manifest.v1",
+                    "application/vnd.docker.distribution.manifest.v1",
+                    "application/vnd.docker.distribution.manifest.v2",
+                    "application/vnd.oci.image.index.v1",
+                    "application/vnd.docker.distribution.manifest.list.v2"
+                  ]
+                },
+                "platform": {
+                  "title": "Platform",
+                  "description": "The image platform",
+                  "type": "object",
+                  "properties": {
+                    "architecture": {
+                      "title": "Architecture",
+                      "description": "The image CPU architecture",
+                      "type": "string",
+                      "examples": [
+                        "amd64",
+                        "ppc64le",
+                        "s390x"
+                      ]
+                    },
+                    "os": {
+                      "title": "OS",
+                      "description": "The image operating system",
+                      "type": "string",
+                      "examples": [
+                        "linux",
+                        "windows"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "architecture",
+                    "os"
+                  ]
+                },
+                "manifests": {
+                  "title": "Manifest List",
+                  "description": "A list of manifests for specific platforms",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "digest": {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/digest"
+                      },
+                      "mediaType": {
+                        "type": "string",
+                        "title": "MIME Type",
+                        "description": "Media Type (MIME) of the resource.",
+                        "default": "application/vnd.oci.image.manifest.v1",
+                        "examples": [
+                          "application/vnd.oci.image.manifest.v1",
+                          "application/vnd.docker.distribution.manifest.v1",
+                          "application/vnd.docker.distribution.manifest.v2",
+                          "application/vnd.oci.image.index.v1"
+                        ]
+                      },
+                      "platform": {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/platform"
+                      },
+                      "manifests": {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/manifests"
+                      }
+                    },
+                    "required": [
+                      "mediaType"
+                    ],
+                    "allOf": [
+                      {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/rulePlatformReq"
+                      },
+                      {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/ruleManifestsReq"
+                      },
+                      {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/ruleDigestorTagReq"
+                      }
+                    ]
+                  }
+                },
+                "rulePlatformReq": {
+                  "if": {
+                    "properties": {
+                      "mediaType": {
+                        "enum": [
+                          "application/vnd.oci.image.manifest.v1",
+                          "application/vnd.docker.distribution.manifest.v1",
+                          "application/vnd.docker.distribution.manifest.v2"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "platform"
+                    ]
+                  }
+                },
+                "ruleManifestsReq": {
+                  "if": {
+                    "properties": {
+                      "mediaType": {
+                        "enum": [
+                          "application/vnd.oci.image.index.v1",
+                          "application/vnd.docker.distribution.manifest.list.v2"
+                        ]
+                      }
+                    }
+                  },
+                  "then": {
+                    "required": [
+                      "manifests"
+                    ]
+                  }
+                },
+                "ruleDigestorTagReq": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "digest"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "tag"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

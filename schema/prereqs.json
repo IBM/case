@@ -1,0 +1,393 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "The Root Schema",
+  "description": "The root of the prereqs schema",
+  "required": [
+    "prereqs"
+  ],
+  "properties": {
+    "prereqs": {
+      "type": "object",
+      "$id": "#/properties/prereqs",
+      "title": "Prerequisites",
+      "description": "The prerequisites schema",
+      "required": [
+        "prereqDefs"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "prereqDefs": {
+          "type": "object",
+          "$id": "#/properties/prereqs/prereqDefs",
+          "title": "Prerequisite definitions",
+          "description": "The prerequisite resolver definitions",
+          "properties": {
+            "k8sResources": {
+              "$id": "#/properties/prereqs/properties/k8sResources",
+              "type": "object",
+              "title": "Kubernetes resource prerequisite defintions",
+              "description": "A list of Kubernetes resources that are prequisites for one or more actions in the CASE",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "$id": "#/properties/prereqs/properties/k8sResources/patternProperties",
+                  "type": "object",
+                  "title": "Kubernetes resources",
+                  "description": "A set of properties that defines a Kubernetes resource prerequisite",
+                  "required": [
+                    "kind",
+                    "apiGroup",
+                    "version"
+                  ],
+                  "properties": {
+                    "metadata ": {
+                      "$ref": "metadata.json#/definitions/metadataRef"
+                    },
+                    "kind": {
+                      "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/kind",
+                      "type": "string",
+                      "title": "Kind",
+                      "description": "The Kind of resource",
+                      "default": "",
+                      "examples": [
+                        "PodSecurityPolicy",
+                        "ClusterRole"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "apiGroup": {
+                      "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/apiGroup",
+                      "type": "string",
+                      "title": "API group",
+                      "description": "The API group of the resource schema",
+                      "default": "",
+                      "examples": [
+                        "extensions",
+                        "",
+                        "policy"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "version": {
+                      "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/version",
+                      "type": "string",
+                      "title": "Version",
+                      "description": "The version of the resource schema API",
+                      "default": "",
+                      "examples": [
+                        "v1",
+                        "v1beta1",
+                        "v1alpha1"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "name": {
+                      "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/name",
+                      "type": "string",
+                      "title": "Name",
+                      "description": "The name of the resource",
+                      "default": "",
+                      "examples": [
+                        "ibm-restricted-psp"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "selector": {
+                      "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/selector",
+                      "type": "object",
+                      "title": "Selector",
+                      "description": "A label selector",
+                      "default": "",
+                      "required": [
+                        "matchExpressions"
+                      ],
+                      "properties": {
+                        "matchExpressions": {
+                          "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/selector/properties/matchExpressions",
+                          "title": "Match expressions",
+                          "description": "An array of Kubernetes label match expressions",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "key",
+                              "operator"
+                            ],
+                            "properties": {
+                              "key": {
+                                "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/selector/properties/matchExpressions/properties/key",
+                                "title": "Key",
+                                "description": "The label key to test",
+                                "type": "string"
+                              },
+                              "operator": {
+                                "$id": "#/properties/prereqs/properties/prereqs/properties/k8sResources/patternProperties/selector/properties/matchExpressions/properties/operator",
+                                "title": "Operator",
+                                "description": "The test operation. One of ['In', 'NotIn', 'Exists', 'DoesNotExist']",
+                                "type": "string",
+                                "enum": [
+                                  "In", "NotIn", "Exists", "DoesNotExist"
+                                ]
+                              },
+                              "values": {
+                                "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/selector/properties/matchExpressions/properties/values",
+                                "title": "Value",
+                                "description": "The values to test for.  Required for In and NotIn operators",
+                                "type" : "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "fieldSelector": {
+                      "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/fieldSelector",
+                      "type": "object",
+                      "title": "Field selector chain",
+                      "description": "The field match expression chain",
+                      "default": "",
+                      "required": [
+                        "matchExpressions"
+                      ],
+                      "properties": {
+                        "matchExpressions": {
+                          "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/fieldSelector/properties/matchExpressions",
+                          "title": "Field match expressions",
+                          "description": "An array of field match expressions",
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "key",
+                              "operator",
+                              "value"
+                            ],
+                            "properties": {
+                              "key": {
+                                "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/fieldSelector/properties/matchExpressions/properties/key",
+                                "title": "Key",
+                                "description": "The field key to test",
+                                "type": "string"
+                              },
+                              "operator": {
+                                "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/fieldSelector/properties/matchExpressions/properties/operator",
+                                "title": "Operator",
+                                "description": "The test operation. One of ['=', '==', '!=']",
+                                "type": "string",
+                                "enum": [
+                                  "=", "==", "!="
+                                ]
+                              },
+                              "value": {
+                                "$id": "#/properties/prereqs/properties/k8sResources/patternProperties/fieldSelector/properties/matchExpressions/properties/value",
+                                "title": "The value to test for",
+                                "type" : "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }                
+                  }
+                }
+              }
+            },
+            "k8sResourceVersions": {
+              "$id": "#/properties/k8sResourceVersions",
+              "type": "object",
+              "title": "Kubernetes resource version prerequisite definitions",
+              "description": "A set of properties that defines a Kubernetes resource versions prerequisite",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$" : {
+                  "$id": "#/properties/prereqs/properties/k8sResourceVersions/patternProperties",
+                  "type": "object",
+                  "title": "Kubernetes resource versions",
+                  "description": "The Kubernetes resource versions",
+                  "required": [
+                    "kind",
+                    "apiGroup",
+                    "version"
+                  ],
+                  "properties": {
+                    "metadata ": {
+                      "$ref": "metadata.json#/definitions/metadataRef"
+                    },
+                    "kind": {
+                      "$id": "#/properties/prereqs/properties/k8sResourceVersions/properties/kind",
+                      "type": "string",
+                      "title": "Kind",
+                      "description": "The kind of resource.",
+                      "default": "",
+                      "examples": [
+                        "Service",
+                        "PodSecurityPolicy"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "apiGroup": {
+                      "$id": "#/properties/prereqs/properties/k8sResourceVersions/properties//apiGroup",
+                      "type": "string",
+                      "title": "API group",
+                      "description": "The API Group of the resource",
+                      "default": "",
+                      "examples": [
+                        "rbac.authorization.k8s.io",
+                        ""
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "version": {
+                      "$id": "#/properties/prereqs/properties/k8sResourceVersions/properties/version",
+                      "type": "string",
+                      "title": "Version",
+                      "description": "The version of the resource",
+                      "default": "",
+                      "examples": [
+                        "v1beta1",
+                        "v1"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
+              }
+            },
+            "k8sDistros": {
+              "$id": "#/properties/k8sDistros",
+              "type": "object",
+              "title": "Kubernetes distribution prerequisite definitions",
+              "description": "A list of Kubernetes distributions that are prequisites for one or more actions in the CASE",
+              "examples": [
+                "kubernetes"
+              ],
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "$id": "#/properties/prereqs/properties/k8sDistros/patternProperties",
+                  "type": "object",
+                  "title": "Kubernetes distributions",
+                  "description": "The Kubernetes distribution prerequisites",
+                  "required": [
+                    "distribution"
+                  ],
+                  "properties": {
+                    "metadata ": {
+                      "$ref": "metadata.json#/definitions/metadataRef"
+                    },
+                    "distribution": {
+                      "$id": "#/properties/prereqs/properties/k8sDistros/properties/distribution",
+                      "type": "string",
+                      "title": "Distribution",
+                      "description": "The type of distribution",
+                      "default": "kubernetes",
+                      "examples": [
+                        "kubernetes","ibmCloud","ibmCloudPrivate","openshift"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "semver": {
+                      "$id": "#/properties/prereqs/properties/k8sDistros/properties/semver",
+                      "type": "string",
+                      "title": "Semantic Version",
+                      "description": "The Semantic Version (semver) of the Kubernetes distribution",
+                      "default": "",
+                      "examples": [
+                        ">=1.11.3",
+                        ">=1.11.3-0, <2-0"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
+              }
+            },
+            "helm": {
+              "$id": "#/properties/prereqs/properties/helm",
+              "type": "object",
+              "title": "Helm prerequisite definitions",
+              "description": "A list of Helm version prequisites for one or more actions in the CASE",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "$id": "#/properties/prereqs/properties/helm/patternProperties/wildcard",
+                  "type": "object",
+                  "title": "Helm prerequisites",
+                  "description": "The Helm prerequisite object",
+                  "properties": {
+                    "metadata ": {
+                      "$ref": "metadata.json#/definitions/metadataRef"
+                    },
+                    "helmVersion": {
+                      "$id": "#/properties/prereqs/properties/helm/patternProperties/wildcard/helmVersion",
+                      "type": "string",
+                      "title": "Helm version",
+                      "description": "The semantic version(s) of the Helm client that is required",
+                      "default": "",
+                      "examples": [
+                        ">=2.14.3",
+                        ">=2.0.0, <2.11.2, >2.11.2, <3.0",
+                        "~3"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "tillerVersion": {
+                      "$id": "#/properties/prereqs/properties/helm/patternProperties/wildcard/tillerVersion",
+                      "type": "string",
+                      "title": "Tiller version",
+                      "description": "The semantic version(s) of the Tiller service that is required",
+                      "default": "",
+                      "examples": [
+                        ">=2.14.3",
+                        ">=2.0.0, <2.11.2, >2.11.2, <3.0",
+                        "~3"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
+              }
+            },
+            "ibmCoreServices": {
+              "$id": "#/properties/prereqs/properties/ibmCoreServices",
+              "type": "object",
+              "title": "IBM Core Services prerequisite definitions",
+              "description": "A list of IBM core services prequisites for one or more actions in the CASE",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "$id": "#/properties/prereqs/properties/ibmCoreServices/patternProperties",
+                  "type": "object",
+                  "title": "IBM Core Services prerequisites",
+                  "description": "The IBM Core Services prerequisities",
+                  "required": [
+                    "name"
+                  ],
+                  "properties": {
+                    "metadata ": {
+                      "$ref": "metadata.json#/definitions/metadataRef"
+                    },
+                    "name": {
+                      "$id": "#/properties/prereqs/properties/ibmCoreServices/patternProperties/properties/name",
+                      "title": "Name",
+                      "description": "The name of the core service.",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

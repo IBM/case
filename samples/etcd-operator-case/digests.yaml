@@ -1,0 +1,119 @@
+
+digests:
+  digestDefs:
+    case:
+      digest: sha256:08f71188c74d4bc5c4017d0ea550fbf491384c0020018802ff16098ebc727d5a
+      size: 21547
+      skip: false
+    inventory:
+      clusterSetup:
+        imageManifest: {}
+        readme:
+          digest: sha256:0cfb2abe7b978dadd42d39df7b5c1737876b2b5a9bd71e701306fd7ed52c0c1c
+          size: 837
+          skip: false
+        resources:
+          resourceDefs:
+            files:
+            - digest: sha256:fc06169a8c205532a8f71d83dc3d8e9d3964daa53811771a1ee8e3cd1dab70dd
+              size: 474
+              skip: false
+            - digest: sha256:8e141837b59ee95e48406303ec8df233fdac04781cb3fff3f031a3371d614036
+              size: 237
+              skip: false
+            - digest: sha256:9e85c9d58f41d7be8c14a88460c57fa6e22e3ffb7a35ac46fe6dbf33cfe719bb
+              size: 864
+              skip: false
+            - digest: sha256:1d30479d78d20016f72732414efa43eccf88e9df776ce017d6d2af1599c90bbe
+              size: 1074
+              skip: false
+            - digest: sha256:e919212a5add286aae08c47261efd47124ba0ce66763fca8092c7e312c98e15c
+              size: 412
+              skip: false
+            - digest: sha256:4593340c09b9c703462c53303886ce84565ba2f8fb25ecb01908765d11398b17
+              size: 444
+              skip: false
+            - digest: sha256:ff729701b5c9ff97bd8721294d165a70bd3f2990c1157586901529f9840ae50b
+              size: 417
+              skip: false
+      etcdBackupExample:
+        imageManifest: {}
+        readme:
+          digest: sha256:dda3e160dfcb26b56c627ff8a96d7f7ab29f9ac3455aea9d97700a3ba1f55611
+          size: 72
+          skip: false
+        resources:
+          resourceDefs:
+            files:
+            - digest: sha256:892f3b670216151012ceef3ff5a582116d60b8a663a3b8d17c05aec66dbbd354
+              size: 339
+              skip: false
+      etcdClusterExample:
+        imageManifest: {}
+        readme:
+          digest: sha256:5df4eddafd859022f24a29e4c495402ca5fb58e5ab2e4a27a97a42c7005d7179
+          size: 74
+          skip: false
+        resources:
+          resourceDefs:
+            files:
+            - digest: sha256:3286ad491bf102c0c1c038750dd2270295929a6cf73012f8e300aa6f61ecbf93
+              size: 323
+              skip: false
+      etcdOperators:
+        imageManifest: {}
+        readme:
+          digest: sha256:26d89d49cb345fa48db2e2b9b996e4b31d48d0670a4e818129c47c286e431379
+          size: 404
+          skip: false
+        resources:
+          resourceDefs:
+            helmCharts:
+            - digest: sha256:4a78bd155b4fb8af9da57b6fd55b22b459b9d39f0ad5794821952f2c26a37452
+              skip: false
+      etcdRestoreExample:
+        imageManifest: {}
+        readme:
+          digest: sha256:dda3e160dfcb26b56c627ff8a96d7f7ab29f9ac3455aea9d97700a3ba1f55611
+          size: 72
+          skip: false
+        resources:
+          resourceDefs:
+            files:
+            - digest: sha256:012936ba557ef07c0b381e153a795d5ebfbb26e4919e7094215804364d85d61b
+              size: 468
+              skip: false
+      namespaceSetup:
+        imageManifest: {}
+        readme:
+          digest: sha256:1570769c6f2dec9c2b997946ac91232d0fe2c99fecd4acbce8973b368b4c9cc5
+          size: 752
+          skip: false
+        resources:
+          resourceDefs:
+            files:
+            - digest: sha256:fd8b757cfa57093fffcc81dca520a1a9dac4acfde03aa2d5aa368ad95bcc1a1c
+              size: 110
+              skip: false
+            - digest: sha256:fcca09305d83eaca8c2a646d47d5885e90cc384a4868864965d1ae5541c9c886
+              size: 305
+              skip: false
+            - digest: sha256:fb49166df5fadcec85412b0a29e3b3b0e1110a17ccfd95e2ce0a6e6e030c11b4
+              size: 120
+              skip: false
+            - digest: sha256:328e58c4be544d84282604e4eb19f3175d2a5f9efcf70531a698817cffa06234
+              size: 334
+              skip: false
+    license:
+      digest: sha256:58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd
+      size: 11357
+      skip: false
+    licenses:
+      apache2:
+        digest: sha256:43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1
+        size: 11356
+        skip: false
+    readme:
+      digest: sha256:4e150a985042896fd9a680f9513a940516049ac5223261cb0c0efb492ea78958
+      size: 3038
+      skip: false

@@ -1,0 +1,100 @@
+
+actions:
+  metadata:
+    name: etcdOperators
+    description: etcd Operator Actions
+    displayName: etcd Operator Actions
+    displayDescription: etcd Operator Actions
+  actionDefs:
+    installAll:
+      metadata :
+        name: installAll
+        displayName: Install All
+        displayDescription: Install the etcd Operator controller Pods and associated custom resource definitions
+      roles: 
+      - clusterAdmin
+      requires:
+        and: 
+        - "/case/prereqs/helm/helmV2"
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResourceVersions/rbac"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - or:
+          - and: 
+            - "!":
+              - "/case/prereqs/k8sDistros/openshift"
+            - or: 
+              - "/case/prereqs/k8sResources/ibmRestrictedPSP"
+              - "/case/prereqs/k8sResources/etcdControllerPSP"
+          - and: 
+            - "/case/prereqs/k8sDistros/openshift"
+            - or:
+              - "/case/prereqs/k8sResources/ibmRestrictedSCC"
+              - "/case/prereqs/k8sResources/etcdControllerSCC"
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: '*'
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
+    install:
+      metadata :
+        name: install
+        displayName: Install
+        displayDescription: Install the etcd Operator controller Pods
+      roles: 
+      - namespaceAdmin
+      requires:
+        and:
+        - "/case/prereqs/helm/helmV2"
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - "/case/prereqs/k8sResourceVersions/etcdCluster"
+        - "/case/prereqs/k8sResourceVersions/etcdBackup"
+        - "/case/prereqs/k8sResourceVersions/etcdRestore"
+        - or:
+          - and: 
+            - "!":
+              - "/case/prereqs/k8sDistros/openshift"
+            - or: 
+              - "/case/prereqs/k8sResources/ibmRestrictedPSP"
+              - "/case/prereqs/k8sResources/etcdControllerPSP"
+          - and: 
+            - "/case/prereqs/k8sDistros/openshift"
+            - or:
+              - "/case/prereqs/k8sResources/ibmRestrictedSCC"
+              - "/case/prereqs/k8sResources/etcdControllerSCC"
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: '*'
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
+    remove:
+      metadata :
+        name: remove
+        displayName: Remove
+        displayDescription: Remove the etcd operator and all etcd databases
+      roles: 
+      - namespaceAdmin
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: '*'
+            verbs:
+            - '*'

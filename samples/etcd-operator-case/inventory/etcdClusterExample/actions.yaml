@@ -1,0 +1,41 @@
+actions:
+  metadata:
+    name: etcdClusterExample
+    description: The actions required to create the etcd cluster resources 
+  actionDefs:
+    create:
+      roles: 
+      - etcdAdmin
+
+      # Requires the prerequisite Kubernetes version, amd64 Linux operating system, and the etcdCluster CRD to be installed
+      requires:
+        and:
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - "/case/prereqs/k8sResourceVersions/etcdCluster"
+
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: EtcdCluster
+            verbs:
+            - '*'
+
+    remove:
+      roles: 
+      - etcdAdmin
+
+      requires:
+        and:
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - "/case/prereqs/k8sResourceVersions/etcdBackup"
+
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: EtcdCluster
+            verbs:
+            - '*'

@@ -1,0 +1,5 @@
+inventory:
+  metadata:
+    name: etcdClusterExample
+    description: Create an etcd cluster 
+  k8sScope: namespace

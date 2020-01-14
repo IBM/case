@@ -1,0 +1,163 @@
+{
+  "definitions": {
+    "digestRef": {
+      "$id": "#/definitions/digestRef",
+      "type": "object",
+      "required": [
+        "digest"
+      ],
+      "properties": {
+        "digest": {
+          "title": "Digest",
+          "description": "The digest",
+          "type": "string",
+          "pattern": "^(.*)$"
+        },
+        "size": {
+          "title": "Size",
+          "description": "Size in bytes",
+          "type": "integer"
+        }
+      }
+    },
+    "digestsRef": {
+      "$id": "#/definitions/digestsRef",
+      "type": "array",
+      "title": "Digests",
+      "description": "Digest references",
+      "items": {
+        "$ref": "#/definitions/digestRef"
+      }
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "Root Schema",
+  "description": "The root of the digests schema",
+  "required": [
+    "digests"
+  ],
+  "properties": {
+    "digests": {
+      "$id": "#/properties/digests",
+      "type": "object",
+      "title": "Digests",
+      "description": "Contains the digest definitions for the resources defined by the CASE",
+      "required": [
+        "digestDefs"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "digestDefs": {
+          "$id": "#/properties/digests/digestDefs",
+          "type": "object",
+          "title": "Digest definitions",
+          "description": "Contains the digest for the resources defined by the CASE",
+          "properties": {
+            "readme": {
+              "title": "README digest",
+              "description": "The digest of the CASE README.md",
+              "$ref": "#/definitions/digestRef"
+            },
+            "inventory": {
+              "type": "object",
+              "$id": "#/properties/inventory",
+              "title": "Inventory items digests",
+              "description": "The digests for the CASE inventory items",
+              "patternProperties": {
+                ".*": {
+                  "$id": "#/properties/inventory/wildcard",
+                  "type": "object",
+                  "title": "Inventory item digest",
+                  "description": "The digests for the specified inventory item",
+                  "properties": {
+                    "readme": {
+                      "title": "README digest",
+                      "description": "The digest of the inventory item README.md",
+                      "$ref": "#/definitions/digestRef"
+                    },
+                    "resources": {
+                      "$id": "#/properties/inventory/wildcard/resources",
+                      "title": "Resources digests",
+                      "description": "The inventory item resource digests",
+                      "type": "object",
+                      "properties": {
+                        "resourceDefs": {
+                          "$id": "#/properties/inventory/wildcard/resources/resourceDefs",
+                          "title": "Resource digests",
+                          "description": "The inventory item resource definition digests",
+                          "type": "object",
+                          "properties": {
+                            "cases": {
+                              "title": "CASE digests",
+                              "description": "The digests for any CASEs in the inventory item",
+                              "$ref": "#/definitions/digestsRef"
+                            },
+                            "helmCharts": {
+                              "title": "Helm chart digests",
+                              "description": "The digests for any Helm charts in the inventory item",
+                              "$ref": "#/definitions/digestsRef"
+                            },
+                            "files": {
+                              "title": "File digests",
+                              "description": "The digests for any files in the inventory item",
+                              "$ref": "#/definitions/digestsRef"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "imageManifest": {
+                      "$id": "#/properties/inventory/wildcard/imageManifest",
+                      "title": "Image digests",
+                      "description": "The container image digests",
+                      "type": "object",
+                      "properties": {
+                        "images": {
+                          "title": "Image digest",
+                          "description": "The container image digest",
+                          "type": "object",
+                          "properties": {
+                            "references": {
+                              "$ref": "#/definitions/digestsRef"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "licenses": {
+              "type": "object",
+              "$id": "#/properties/licenses",
+              "title": "Product license files digest",
+              "description": "The digest for the product license files",
+              "patternProperties": {
+                ".*": {
+                  "$ref": "#/definitions/digestRef"
+                }
+              }
+            },
+            "license": {
+              "$id": "#/properties/licenses",
+              "title": "CASE license digest",
+              "description": "The digest for the CASE license",
+              "$ref": "#/definitions/digestRef"
+            },
+            "case": {
+              "$id": "#/properties/case",
+              "title": "CASE digest",
+              "description": "The canonical CASE digest",
+              "$ref": "#/definitions/digestRef"
+            }
+          }
+        }
+      }
+    }
+  }
+}

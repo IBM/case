@@ -1,0 +1,5 @@
+inventory:
+  metadata:
+    name: namespaceSetup
+    description:  Setup any namespace requirements
+  k8sScope: cluster

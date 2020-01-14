@@ -1,0 +1,43 @@
+actions:
+  actionDefs:
+    create:
+      roles: 
+      - etcdAdmin
+
+      # Requires the prerequisite Kubernetes version, amd64 Linux operating system, and the etcdBackup CRD to be installed
+      requires:
+        and:
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - "/case/prereqs/k8sResourceVersions/etcdBackup"
+
+      k8sPermissions:
+        rules:
+        - rule: 
+            group: etcd.database.coreos.com
+            resource: EtcdBackup
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
+    remove:
+      roles: 
+      - etcdAdmin
+
+      requires:
+        and:
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - "/case/prereqs/k8sResourceVersions/etcdBackup"
+
+      k8sPermissions:
+        rules:
+        - rule: 
+            group: etcd.database.coreos.com
+            resource: EtcdBackup
+            verbs:
+            - '*'

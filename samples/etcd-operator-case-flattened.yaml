@@ -1,0 +1,673 @@
+# Generated CASE File
+case:
+  case:
+    specVersion: 1.0.0
+    name: etcd-operator-case
+    displayName:  Sample IBM certified container CASE
+    version: 1.0.0
+    appVersion: 1.0.0
+    description:  "Sample IBM certified container CASE"
+    icons: 
+    - base64: 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
+      mediaType: image/png
+      url: https://raw.githubusercontent.com/CloudCoreo/etcd-cluster/master/images/icon.png
+    organization:  "IBM"
+    
+    supports:
+      architectures:
+        amd64: {}
+      k8sDistros:
+        rhocp4: {}
+      managedPlatforms:
+        ibm: {}
+        redhat: {}
+    
+    certifications:
+      ibmccs: {}
+    
+    catalogs:
+      database: {}
+    
+    classifications:
+      opensource: {}
+      experimental: {}
+      sample: {}
+    
+    webPage: "http://ibm.com"
+    
+    licenses:
+      apache2: 
+        ref: license
+        url: https://www.apache.org/licenses/LICENSE-2.0.txt
+        mediaType: application/text
+        metadata:
+          displayName: Apache 2.0
+          displayDescription: Apache License, version 2.0
+  roles:
+    roleDefs:
+      clusterAdmin:
+        metadata:
+          name: clusterAdmin
+          displayName: Cluster Admin
+          displayDescription: A user who has cluster administrator permissions.
+      namespaceAdmin:
+        metadata:
+          name: namespaceAdmin
+          displayName: Namespace Admin
+          displayDescription: A user who has namespace administrator permissions.
+      etcdAdmin:
+        metadata:
+          name: etcdAdmin
+          displayName: etcd Admin
+          displayDescription: A user who has the authority to administer etcd cluster
+            instances.
+  prereqs:
+    prereqDefs:
+      k8sResources:
+        ibmRestrictedPSP:
+          kind: PodSecurityPolicy
+          apiGroup: policy
+          name: ibm-restricted-psp
+          version: v1beta1
+        etcdControllerPSP:
+          kind: PodSecurityPolicy
+          apiGroup: policy
+          name: etcd-contoller-psp
+          version: v1beta1
+        ibmRestrictedSCC:
+          kind: SecurityContextConstraints
+          apiGroup: security.openshift.io
+          name: restricted
+          version: v1
+        etcdControllerSCC:
+          kind: SecurityContextConstraints
+          apiGroup: security.openshift.io
+          name: etcd-contoller-scc
+          version: v1
+        pspClusterRole:
+          kind: ClusterRole
+          apiGroup: rbac.authorization.k8s.io
+          name: ibm-restricted-psp-etcd-cr
+          version: v1
+        workerIntelLinux:
+          kind: node
+          apiGroup: ""
+          version: v1
+          selector:
+            matchExpressions:
+            - key: beta.kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+            - key: beta.kubernetes.io/os
+              operator: In
+              values:
+              - linux
+            - key: node-role.kubernetes.io/worker
+              operator: Exists
+      k8sResourceVersions:
+        rbac:
+          kind: ClusterRole
+          apiGroup: rbac.authorization.k8s.io
+          version: v1
+        etcdCluster:
+          kind: EtcdCluster
+          apiGroup: etcd.database.coreos.com
+          version: v1beta2
+        etcdBackup:
+          kind: EtcdBackup
+          apiGroup: etcd.database.coreos.com
+          version: v1beta2
+        etcdRestore:
+          kind: EtcdRestore
+          apiGroup: etcd.database.coreos.com
+          version: v1beta2
+      k8sDistros:
+        ibmCloud:
+          distribution: ibmCloud
+          semver: '>=1.11.3'
+        ibmCloudPrivate:
+          distribution: ibmCloudPrivate
+          semver: '>=1.11.3'
+        openshift:
+          distribution: openshift
+          semver: '>=1.11.3'
+        kubernetes:
+          distribution: kubernetes
+          semver: '>=1.11-0'
+      helm:
+        helmV2:
+          helmVersion: '>2.13.0'
+          tillerVersion: '>2.13.0'
+  inventories:
+    clusterSetup:
+      inventory:
+        metadata:
+          name: clusterSetup
+          description: The cluster resources required before installing.
+        k8sScope: cluster
+        actions:
+          metadata:
+            name: clusterSetup
+            description: The actions required to install the etcd cluster resources
+          actionDefs:
+            install:
+              metadata:
+                name: install
+                description: Installs the etcd operator
+              roles:
+              - clusterAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - or:
+                  - /case/prereqs/k8sDistros/ibmCloud
+                  - /case/prereqs/k8sDistros/ibmCloudPrivate
+                  - /case/prereqs/k8sDistros/openshift
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: rbac.authorization.k8s.io
+                    resource: clusterroles
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+                    version: '*'
+                - rule:
+                    group: apiextensions.k8s.io
+                    resource: customresourcedefinitions
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+                    version: v1beta1
+                - ifExpression:
+                    '!':
+                    - /case/prereqs/k8sDistros/openshift
+                  rule:
+                    group: policy
+                    resource: podsecuritypolicies
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+                - ifExpression: /prereqs/k8sDistros/openshift
+                  rule:
+                    group: security.openshift.io
+                    resource: securitycontextconstraints
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+            remove:
+              metadata:
+                name: install
+                description: Installs the etcd operator
+              roles:
+              - clusterAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - or:
+                  - /case/prereqs/k8sDistros/ibmCloud
+                  - /case/prereqs/k8sDistros/ibmCloudPrivate
+                  - /case/prereqs/k8sDistros/openshift
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: rbac.authorization.k8s.io
+                    resource: clusterroles
+                    verbs:
+                    - '*'
+                - rule:
+                    group: apiextensions.k8s.io
+                    resource: customresourcedefinitions
+                    verbs:
+                    - '*'
+        resources:
+          metadata:
+            name: clusterSetup
+            displayName: etcd Resources
+            displayDescription: etcd Resources that require a cluster admin to create.
+          resourceDefs:
+            files:
+            - ref: etcd-resources/etcd-operator-clusterrole.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: etcd-resources/etcd-operator-psp-clusterrole.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: etcd-resources/etcd-operator-psp.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: etcd-resources/etcd-operator-scc.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: etcd-resources/etcdbackups-crd.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: etcd-resources/etcdclusters-crd.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: etcd-resources/etcdrestores-crd.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+    etcdBackupExample:
+      inventory:
+        metadata:
+          name: etcdBackupExample
+          description: Backup an etcd cluster
+        k8sScope: namespace
+        actions:
+          actionDefs:
+            create:
+              roles:
+              - etcdAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdBackup
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: EtcdBackup
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+            remove:
+              roles:
+              - etcdAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdBackup
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: EtcdBackup
+                    verbs:
+                    - '*'
+        resources:
+          metadata:
+            name: etcdBackupExample
+            displayName: etcd Resources
+            displayDescription: etcd Resources that require a cluster admin to create.
+          resourceDefs:
+            files:
+            - ref: etcdBackupExample.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+    etcdClusterExample:
+      inventory:
+        metadata:
+          name: etcdClusterExample
+          description: Create an etcd cluster
+        k8sScope: namespace
+        actions:
+          metadata:
+            name: etcdClusterExample
+            description: The actions required to create the etcd cluster resources
+          actionDefs:
+            create:
+              roles:
+              - etcdAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdCluster
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: EtcdCluster
+                    verbs:
+                    - '*'
+            remove:
+              roles:
+              - etcdAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdBackup
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: EtcdCluster
+                    verbs:
+                    - '*'
+        resources:
+          metadata:
+            name: etcdClusterExample
+            displayName: etcd Resources
+            displayDescription: etcd Resources that require a cluster admin to create.
+          resourceDefs:
+            files:
+            - ref: etcdClusterExample.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+    etcdOperators:
+      inventory:
+        metadata:
+          name: etcdOperators
+          displayName: etcd Operators
+          displayDescription: Install the etcd operator Helm Chart
+        k8sScope: namespace
+        actions:
+          metadata:
+            name: etcdOperators
+            description: etcd Operator Actions
+            displayName: etcd Operator Actions
+            displayDescription: etcd Operator Actions
+          actionDefs:
+            installAll:
+              metadata:
+                name: installAll
+                displayName: Install All
+                displayDescription: Install the etcd Operator controller Pods and associated
+                  custom resource definitions
+              roles:
+              - clusterAdmin
+              requires:
+                and:
+                - /case/prereqs/helm/helmV2
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResourceVersions/rbac
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - or:
+                  - and:
+                    - '!':
+                      - /case/prereqs/k8sDistros/openshift
+                    - or:
+                      - /case/prereqs/k8sResources/ibmRestrictedPSP
+                      - /case/prereqs/k8sResources/etcdControllerPSP
+                  - and:
+                    - /case/prereqs/k8sDistros/openshift
+                    - or:
+                      - /case/prereqs/k8sResources/ibmRestrictedSCC
+                      - /case/prereqs/k8sResources/etcdControllerSCC
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: '*'
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+            install:
+              metadata:
+                name: install
+                displayName: Install
+                displayDescription: Install the etcd Operator controller Pods
+              roles:
+              - namespaceAdmin
+              requires:
+                and:
+                - /case/prereqs/helm/helmV2
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdCluster
+                - /case/prereqs/k8sResourceVersions/etcdBackup
+                - /case/prereqs/k8sResourceVersions/etcdRestore
+                - or:
+                  - and:
+                    - '!':
+                      - /case/prereqs/k8sDistros/openshift
+                    - or:
+                      - /case/prereqs/k8sResources/ibmRestrictedPSP
+                      - /case/prereqs/k8sResources/etcdControllerPSP
+                  - and:
+                    - /case/prereqs/k8sDistros/openshift
+                    - or:
+                      - /case/prereqs/k8sResources/ibmRestrictedSCC
+                      - /case/prereqs/k8sResources/etcdControllerSCC
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: '*'
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+            remove:
+              metadata:
+                name: remove
+                displayName: Remove
+                displayDescription: Remove the etcd operator and all etcd databases
+              roles:
+              - namespaceAdmin
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: '*'
+                    verbs:
+                    - '*'
+        resources:
+          metadata:
+            name: etcdOperators
+            displayName: etcd Resources
+            displayDescription: etcd Resources that require a cluster admin to create.
+          resourceDefs:
+            helmCharts:
+            - metadata:
+                name: etcdOperatorChart
+                displayName: CoreOS etcd-operator Helm chart for Kubernetes
+              chart: etcd-operator
+              version: 0.10.2
+              mediaType: application/vnd.case.resource.helm.chart.v1
+              repositoryURLs:
+              - https://kubernetes-charts.storage.googleapis.com
+            containerImages:
+            - image: coreos/etcd-operator
+              mediaType: application/vnd.oci.image.manifest.v1+json
+              digest: sha256:66a37fd61a06a43969854ee6d3e21087a98b93838e284a6086b13917f96b0d9b
+              platform:
+                architecture: amd64
+                os: linux
+              registries:
+              - host: quay.io
+            - image: coreos/etcd
+              mediaType: application/vnd.oci.image.manifest.v1+json
+              digest: sha256:06520f89439cb7edf4fb921f90e2b4494db3cc5bb61969078dc3e375602a047b
+              platform:
+                architecture: amd64
+                os: linux
+              registries:
+              - host: quay.io
+    etcdRestoreExample:
+      inventory:
+        metadata:
+          name: etcdRestoreExample
+          description: Setup any namespace requirements
+        k8sScope: namespace
+        actions:
+          actionDefs:
+            create:
+              roles:
+              - etcdAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdRestore
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: EtcdRestore
+                    verbs:
+                    - get
+                    - list
+                    - create
+            remove:
+              roles:
+              - etcdAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - /case/prereqs/k8sResourceVersions/etcdRestore
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: etcd.database.coreos.com
+                    resource: EtcdRestore
+                    verbs:
+                    - '*'
+        resources:
+          resourceDefs:
+            files:
+            - ref: etcdRestoreExample.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+    namespaceSetup:
+      inventory:
+        metadata:
+          name: namespaceSetup
+          description: Setup any namespace requirements
+        k8sScope: cluster
+        actions:
+          metadata:
+            name: namespaceSetup
+            description: Setup any namespace requirements
+          actionDefs:
+            configure:
+              metadata:
+                name: configure
+                description: Setup the namespace
+              roles:
+              - namespaceAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+                - or:
+                  - and:
+                    - '!':
+                      - /case/prereqs/k8sDistros/openshift
+                    - or:
+                      - /case/prereqs/k8sResources/ibmRestrictedPSP
+                      - /case/prereqs/k8sResources/etcdControllerPSP
+                      - /case/prereqs/k8sResources/pspClusterRole
+                  - and:
+                    - /case/prereqs/k8sDistros/openshift
+                    - or:
+                      - /case/prereqs/k8sResources/ibmRestrictedSCC
+                      - /case/prereqs/k8sResources/etcdControllerSCC
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: ""
+                    resource: namespaces
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+                - rule:
+                    group: extensions
+                    resource: networkpolicies
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+                - rule:
+                    group: ""
+                    resource: serviceaccounts
+                    verbs:
+                    - get
+                    - list
+                    - watch
+                    - create
+                    - patch
+                    - update
+            remove:
+              metadata:
+                name: remove
+                description: Undo the namespace setup configuration
+              roles:
+              - namespaceAdmin
+              requires:
+                and:
+                - /case/prereqs/k8sDistros/kubernetes
+                - /case/prereqs/k8sResources/workerIntelLinux
+              k8sPermissions:
+                rules:
+                - rule:
+                    group: ""
+                    resource: namespaces
+                    verbs:
+                    - '*'
+                - rule:
+                    group: extensions
+                    resource: networkpolicies
+                    verbs:
+                    - '*'
+                - rule:
+                    group: ""
+                    resource: serviceaccounts
+                    verbs:
+                    - '*'
+        resources:
+          metadata:
+            name: namespaceSetup
+            displayName: Namespace Setup
+            displayDescription: etcd resources that require a namespace admin
+          resourceDefs:
+            files:
+            - ref: namespace.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: rolebinding.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: service-account.yaml
+              mediaType: application/vnd.case.resource.k8s.v1+yaml
+            - ref: scc.sh
+              mediaType: application/vnd.case.resource.script.bash.v1
+  certifications:
+    ibmccs:
+      certification:
+        metadata:
+          name: ibmccs
+          displayName: Certified container software
+        id: some-autogenerated-id
+        provider: ibm
+        type: ccs
+        issueDate: 10/01/2019
+        expirationDate: 03/31/2020
+        terms: Valid from date of issue. Security vulnerability management and enhancements
+          are delivered on the latest version of the chart and images
+        exceptions:
+        - id: "12345"
+          description: 'Non RedHat certificated operator <operatorname> : UBI image unavailable
+            for community operator, verified manual per standards and supported by IBM'
+          remediation: Contribute UBI based image to community operator and RedHat Certify
+            with next release

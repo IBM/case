@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "Root Schema",
+  "description": "The root of the inventory schema",
+  "definitions": {},
+  "required": [
+    "inventory"
+  ],
+  "properties": {
+    "inventory": {
+      "type": "object",
+      "$id": "#/properties/inventory",
+      "title": "Inventory data",
+      "description": "Information related to the inventory item",
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "k8sScope": {
+          "$id": "#/properties/inventory/k8sScope",
+          "type": "string",
+          "title": "Kubernetes scope",
+          "description": "The Kubernetes scope this inventory item applies to.",
+          "default": "",
+          "examples": [
+            "namespace",
+            "cluster"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  }
+}

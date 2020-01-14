@@ -1,0 +1,9 @@
+resources:
+  metadata:
+    name: etcdClusterExample
+    displayName: etcd Resources
+    displayDescription: etcd Resources that require a cluster admin to create.
+  resourceDefs:
+    files:
+    - ref: etcdClusterExample.yaml
+      mediaType: application/vnd.case.resource.k8s.v1+yaml
