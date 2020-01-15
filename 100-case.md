@@ -130,7 +130,7 @@ This describes the Kubernetes distributions that are supported by the CASE and p
 * `icp`: IBM Cloud Private
 * `iks`: IBM Kubernetes Service
 * `rhocp3`: RedHat OpenShift Container Platform 3
-* `rhocp4`: RedHat OpenShift Container Platform 4 (required)
+* `rhocp4`: RedHat OpenShift Container Platform 4
 * `aks`: Microsoft Azure
 * `gce`: Google Compute Engine
 * `eks`: Amazon Enterprise Kubernetes Service
