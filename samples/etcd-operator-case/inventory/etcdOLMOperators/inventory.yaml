@@ -1,0 +1,7 @@
+inventory:
+  # This is the main Operator runtime, which includes cluster-scoped operator.
+  metadata: 
+    name: etcdOperators 
+    displayName: etcd Operators
+    displayDescription:  Install the etcd operator via OLM
+  k8sScope: cluster

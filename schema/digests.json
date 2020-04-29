@@ -105,23 +105,10 @@
                               "title": "File digests",
                               "description": "The digests for any files in the inventory item",
                               "$ref": "#/definitions/digestsRef"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "imageManifest": {
-                      "$id": "#/properties/inventory/wildcard/imageManifest",
-                      "title": "Image digests",
-                      "description": "The container image digests",
-                      "type": "object",
-                      "properties": {
-                        "images": {
-                          "title": "Image digest",
-                          "description": "The container image digest",
-                          "type": "object",
-                          "properties": {
-                            "references": {
+                            },
+                            "containerImages": {
+                              "title": "Container image digests",
+                              "description": "The digests for any container images in the inventory item",
                               "$ref": "#/definitions/digestsRef"
                             }
                           }

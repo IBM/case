@@ -8,8 +8,10 @@
     - [k8sDistros](#k8sdistros)
       - [Distribution Resolvers](#distribution-resolvers)
     - [helm](#helm)
+    - [client](#client)
     - [ibmCoreServices](#ibmcoreservices)
-  - [Semver Version Constraints](#semver-version-constraints)
+  - [Specifying Prerequisite Version Ranges](#specifying-prerequisite-version-ranges)
+    - [Non-functional versions](#non-functional-versions)
 
 ## Status:  Beta
 
@@ -25,7 +27,8 @@ The `prereqs.yaml` has the following attributes:
     * `k8sResources`:  The resolver for Kubernetes resources. See [k8sResources](#k8sResources).
     * `k8sResourceVersions`: The resolver for Kubernetes resource API versions. See [k8sResourceVersions](#k8sResourceVersions).
     * `k8sDistros`: The resolver for Kubernetes distribution vendor and version. See [k8sDistros](#k8sDistros).
-    * `helm`: The resolver for Helm versions.  See [helm](#helm).
+    * `helm`: The resolver for Helm versions. See [helm](#helm).
+    * `client`: The client-side program requirements. See [client](#client).
     * `ibmCoreServices`  The resolver for IBM core services. See [ibmCoreServices](#ibmCoreServices).
 
 ### k8sResources
@@ -79,10 +82,23 @@ Each Kubernetes distribution resolver is a well known name which include:
 This resolver is used to identify the version of Helm and/or Tiller.  If this resolver is present, then a Helm client must be configured and available.
 
 The `helm` resource has the following attributes:
-* `<Helm Prereq Name>`:  A [CASE Property](010-case-structure.md#yaml-file-format) describing the Helm prerequisite.  (Required)
-  * `metadata`:  Describes the Helm prereq.  See [CASE Metadata](010-case-structure.md#Specification-metadata-and-versioning) for details.
-  * `helmVersion`:  The semantic version constraint of the Helm client (optional).  See [semver version constraints](#semver-version-constraints).
-  * `tillerVersion`: The semantic version constraint of Tiller (optional).  See [semver version constraints](#semver-version-constraints).
+* `<Helm Prereq Name>`: A [CASE Property](010-case-structure.md#yaml-file-format) describing the Helm prerequisite.  (Required)
+  * `metadata`: Describes the Helm prerequisite. See [CASE Metadata](010-case-structure.md#Specification-metadata-and-versioning) for details.
+  * `helmVersion`: The semantic version constraint of the Helm client (optional). See [semver version constraints](#semver-version-constraints).
+  * `tillerVersion`:The semantic version constraint of Tiller (optional). See [semver version constraints](#semver-version-constraints).
+
+
+### client
+This resolver is used to identify client-side program requirements needed to install the product specified by the CASE.
+
+The `client` resource has the following attributes:
+* `<Client Prereq Name>`: A [CASE Property](010-case-structure.md#yaml-file-format) describing the client prerequisite. (Required)
+  * `metadata` Describes the client prerequisite.  See [CASE Metadata](010-case-structure.md#Specification-metadata-and-versioning) for details.
+  * `command`: The command name expected to be in the system path of the operating system. (Required)
+  * `versionArgs`: The command line arguments needed to retrieve the version of the command. Default: `--version`.
+  * `versionRegex`: The regex to match against the output of the command to verify the expected version is installed. If not specified, any version of the command found in the system path is considered appropriate.
+
+**Note:** The following reserved characters are not allowed in the `command` or `versionArgs` properties: `|` `;` `&` `$` `>` `<` `\` `!` `` ` ``
 
 
 ### ibmCoreServices
@@ -107,42 +123,49 @@ Each service-resolver includes the following fields:
 * `<none>` - Reserved for future use, such as versioning.
 
 
-## Semver Version Constraints
-This specification utilizes the semver version constraint grammar provided by the [Masterminds/semver](https://github.com/Masterminds/semver#checking-version-constraints).  This is the same library that is used by Helm and is very flexible.
+## Specifying Prerequisite Version Ranges 
+A `Range` is a set of conditions that specify which versions satisfy the prerequisite. This specification utilizes basic comparisons and standard AND/OR logic to define the expected version range.
+
+The basic comparisons are:
+
+<table>
+    <tr>
+        <td>=</td>
+        <td>equal</td>
+    </tr>
+    <tr>
+        <td>!=</td>
+        <td>not equal</td>
+    </tr>
+    <tr>
+        <td>></td>
+        <td>greater than</td>
+    </tr>
+    <tr>
+        <td><</td>
+        <td>less than</td>
+    </tr>
+    <tr>
+        <td>>=</td>
+        <td>greater than or equal</td>
+    </tr>
+    <tr>
+        <td><=</td>
+        <td>less than or equal</td>
+    </tr>
+</table>
+
+Basic comparisons are combined into logical AND and OR combinations. ANDs are specified with spaces between comparison objects and ORs are specified with the standard double-pipe character: `||`. Logical AND is given higher priority than OR and parenthesis are not supported for  
 
 Examples:
-* To support any non-patched version of Kubernetes v1 above 1.11.3:  
-  * `>=1.11.3, <2`
-* To support any version of Kubernetes v1 above 1.11.3, including prerereleases and versions of Kubernetes that use the hyphen characeter to identify a build version:  
-  * `>=1.11.3-0, <2-0`
-* To support any version of Helm v2 other than 2.11.2:  
-  * `>=2.0.0, <2.11.2, >2.11.2, <3.0`
-* To support Helm 3 and above:
-  * `~3.x`
+* This example will support any v1.x version above or equal to 1.11.3:
+  * `>=1.11.3 <2`
+* This example will support either versions 1.x through 2.x or versions 3.4.0 and above
+  * `>= 1.0 <3.0.0 || >= 3.4.0`
+* To support any version other than 2.11.2:
+  * `>=2.0.0 <2.11.2 || >2.11.2 <3.0` or, more simply:
+  * `!=2.11.2`
 
-Example syntax (run in the [Go Playground](https://play.golang.org)):
-```go
-package main
+### Non-functional versions
 
-import (
-	"fmt"
-	"github.com/Masterminds/semver"
-)
-
-func main() {
-	c, err := semver.NewConstraint(">=1.11.3-0, <2.0-0")
-	if err != nil {
-		// Handle constraint not being parsable.
-	}
-
-	v, err := semver.NewVersion("1.11.4-alpha")
-	if err != nil {
-		// Handle version not being parsable.
-	}
-	// Check if the version meets the constraints. The a variable will be true.
-	a := c.Check(v)
-	fmt.Println("Check Result=", a)
-}
-
-```
-
+As stated in the [case.yaml specification](100-case.md#version), CASE supports non-functional versions. These are specified after the standard version and are prefixed with a plus sign (`+`). In order of preference, non-functional versions come after a standard release. For example, `1.0.0 < 1.0.0+20191008.162055`.

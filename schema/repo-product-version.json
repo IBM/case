@@ -1,0 +1,48 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "The 'Product Version Index Schema' for a CASE repository",
+  "description": "The 'Product Version Index Schema' for a CASE repository. This is essentially similar to case.yaml, with additional values.",
+  "required": [
+    "apiVersion",
+    "case"
+  ],
+  "properties": {
+    "apiVersion" : {
+      "$id": "#/properties/apiVersion",
+      "type": "string",
+      "title": "The api version of the 'Product Version Index Schema'.",
+      "default": "",
+      "examples": [
+        "1.0.0"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "created": {
+      "$id": "#/properties/created",
+      "type": "string",
+      "title": "The created date and time for this CASE",
+      "default": "",
+      "examples": [
+        "2019-09-30T16:00:00.45234224-06:00"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "digest": {
+      "$id": "#/properties/digest",
+      "type": "string",
+      "title": "The CASE digest",
+      "default": "",
+      "examples": [
+        "etcd-operator"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "case": {
+      "title": "The CASE descriptor.",
+      "$ref": "case.json#/definitions/caseRef"
+    }
+  }
+}

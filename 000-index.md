@@ -11,4 +11,5 @@
 * [CASE Signature YAML and Object](300-signature.md)
   * [CASE digests.yaml Specification](310-digests.md)
 * [CASE Archive](400-archive.md)
+* [CASE Repository](500-repository.md)
 

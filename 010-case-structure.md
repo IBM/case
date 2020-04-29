@@ -157,6 +157,4 @@ or:
 ```
 
 ### Semver and Semver Comparision Formats
-This specification uses the [Semantic Version 2.0.0 specification](https://semver.org/) (semver) for describing versions of entities.
-
-This specification uses the [Masterminds semver](https://github.com/Masterminds/semver) grammar for comparing versions. 
+This specification uses the [Semantic Version 2.0.0 specification](https://semver.org/) (semver) for describing versions of entities. 

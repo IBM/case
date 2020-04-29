@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: etcd
+  namespace: openshift-operators
+spec:
+  channel: clusterwide-alpha
+  name: etcd
+  source: etcd-operator-catalog
+  sourceNamespace: openshift-marketplace
+  installPlanApproval: Automatic
+  startingCSV: etcdoperator.v0.9.4-clusterwide

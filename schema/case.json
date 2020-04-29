@@ -1,362 +1,370 @@
 {
-  "definitions": {},
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
   "type": "object",
   "title": "The Root Schema",
   "description": "The root of the CASE schema",
-  "required": [
-    "specVersion",
-    "name",
-    "version",
-    "appVersion",
-    "description",
-    "icons",
-    "organization",
-    "webPage"
-  ],
-  "properties": {
-    "metadata": {
-      "$ref": "metadata.json#/definitions/metadataRef"
-    },
-    "specVersion": {
-      "$id": "#/properties/specVersion",
-      "type": "string",
-      "title": "Specification version",
-      "description": "The CASE specification version that this CASE implements",
-      "default": "",
-      "examples": [
-        "1.0.0"
+  "$ref": "#/definitions/caseRef",
+  "definitions": {
+    "caseRef": {
+      "required": [
+        "specVersion",
+        "name",
+        "version",
+        "appVersion",
+        "description",
+        "icons",
+        "organization",
+        "webPage"
       ],
-      "pattern": "^(.*)$"
-    },
-    "name": {
-      "$id": "#/properties/name",
-      "type": "string",
-      "title": "CASE name",
-      "description": "The name of the CASE",
-      "default": "",
-      "examples": [
-        "etcd-operator"
-      ],
-      "pattern": "^[a-z_-][A-Za-z0-9_-]{0,49}$"
-    },
-    "displayName": {
-      "$id": "#/properties/name",
-      "type": "string",
-      "title": "CASE display name",
-      "description": "The name of this CASE to be displayed to a user interface",
-      "default": "",
-      "examples": [
-        "etcd Operator"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "version": {
-      "$id": "#/properties/version",
-      "type": "string",
-      "title": "CASE version",
-      "description": "The version of this CASE",
-      "default": "",
-      "examples": [
-        "1.0.0"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "appVersion": {
-      "$id": "#/properties/appVersion",
-      "type": "string",
-      "title": "Application version",
-      "description": "The version of the application represented by this CASE",
-      "default": "0.0.1",
-      "examples": [
-        "1.0.0"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "description": {
-      "$id": "#/properties/description",
-      "type": "string",
-      "title": "CASE description",
-      "description": "The description of this CASE",
-      "default": "",
-      "examples": [
-        "Sample certified container CASE"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "displayDescription": {
-      "$id": "#/properties/displayDescription",
-      "type": "string",
-      "title": "CASE display description",
-      "description": "The description of this CASE to be displayed to a user interface",
-      "default": "",
-      "examples": [
-        "Sample certified container CASE"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "icons": {
-      "$id": "#/properties/icon",
-      "type": "array",
-      "title": "Icon",
-      "description": "The icon schema",
-      "items": {
-        "type" : "object",
-        "properties" : {
-          "base64": {
-            "$id": "#/properties/icons/properties/base64",
-            "title": "Base64 icon",
-            "description": "The base64 encoded binary representation of the image (png or svg)",
-            "type":"string",
-            "default": "",
-            "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
-          },
-          "mediaType" : {
-            "$id": "#/properties/icons/properties/mediaType",
-            "title": "Icon media type (MIME)",
-            "description": "The MIME type of the media",
-            "type": "string",
-            "default": "",
-            "examples": [
-              "image/png",
-              "image/svg+xml"
-            ],
-            "pattern": "^(.*)$"
-          },
-          "url" : {
-            "$id": "#/properties/icons/properties/url",
-            "title": "Icon URL",
-            "description": "The URL of the icon if not embedded",
-            "type": "string",
-            "default": "",
-            "pattern": "^(.*)$"
-          }
-        }
-      }
-    },
-    "organization": {
-      "$id": "#/properties/organization",
-      "type": "string",
-      "description": "The name of the organization that owns or builds this CASE",
-      "default": "",
-      "examples": [
-        "IBM",
-        "Red Hat"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "classifications": {
-      "$id": "#/properties/classification",
-      "type": "object",
-      "title": "CASE license classification",
-      "description": "The classifications describe the license classifications of the software. The software may support multiple classifications. See the CASE Specification for a list of common classifications",
-      "patternProperties": {
-        "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-          "type": "object"
-        }
-      }
-    },
-    "certifications": {
-      "$id": "#/properties/certifications",
-      "type": "object",
-      "title": "CASE certifications",
-      "description": "The certifications provide a high level overview of various certifications that this CASE implements or partially implements",
-      "examples": [
-        "ibmccp",
-        "ibmcc"
-      ],
-      "patternProperties": {
-        "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-          "$id": "#/properties/certifications/certification",
-          "type": "object",
-          "description": "A certification name",
-          "additionalProperties": true,
-          "properties": {
-            "metadata": {
-              "$ref": "metadata.json#/definitions/metadataRef"
-            }
-          }
-        }
-      }
-    },
-    "catalogs": {
-      "$id": "#/properties/catalogs",
-      "type": "object",
-      "title": "Catalog categories",
-      "description": "Catalog categories provide high level groupings of information that aid software catalogs and marketplaces to group related software",
-      "patternProperties": {
-        "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-          "type": "object"
-        }
-      }
-    },
-    "supports": {
-      "$id": "#/properties/supports",
-      "type": "object",
-      "title": "Supported environments",
-      "description": "Describes the various types of supported environments that this software supports, partially or fully",
-      "patternProperties": {
-        "architectures": {
-          "$id": "#/properties/supports/architectures",
-          "type": "object",
-          "title": "Supported compute architectures",
-          "description": "The compute architectures that this software fully or partially supports. See the CASE Specification for the common architecture keywords",
-          "patternProperties": {
-            "amd64": {
-              "$id": "#/properties/supports/architectures/amd64",
-              "type": "object",
-              "title": "AMD 64-bit"
-            },
-            "ppc64le": {
-              "$id": "#/properties/supports/architectures/ppc64le",
-              "type": "object",
-              "title": "Power PC 64-bit"
-            },
-            "s390x": {
-              "$id": "#/properties/supports/architectures/s390x",
-              "type": "object",
-              "title": "System 390"
-            },
-            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-              "type": "object",
-              "$id": "#/properties/supports/architectures/wildcard"
-            }
-          }
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
         },
-        "k8sDistros": {
-          "$id": "#/properties/supports/k8sDistros",
-          "type": "object",
-          "title": "Supported Kubernetes distributions",
-          "description": "The compute architectures that this software fully or partially supports. See the CASE Specification for the common architecture keywords",
-          "patternProperties": {
-            "icp": {
-              "$id": "#/properties/supports/k8sDistros/icp",
-              "type": "object",
-              "title": "IBM Cloud Private"
-            },
-            "iks": {
-              "$id": "#/properties/supports/k8sDistros/iks",
-              "type": "object",
-              "title": "IBM Kubernetes Service"
-            },
-            "rhocp3": {
-              "$id": "#/properties/supports/k8sDistros/rhocp3",
-              "type": "object",
-              "title": "RedHat OpenShift Container Platform 3"
-            },
-            "rhocp4": {
-              "$id": "#/properties/supports/k8sDistros/rhocp4",
-              "type": "object",
-              "title": "RedHat OpenShift Container Platform 4"
-            },
-            "aks": {
-              "$id": "#/properties/supports/k8sDistros/aks",
-              "type": "object",
-              "title": "Microsoft Azure"
-            },
-            "gce": {
-              "$id": "#/properties/supports/k8sDistros/gce",
-              "type": "object",
-              "title": "Google Compute Engine"
-            },
-            "eks": {
-              "$id": "#/properties/supports/k8sDistros/eks",
-              "type": "object",
-              "title": "Amazon Enterprise Kubernetes Service"
-            },
-            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-              "type": "object",
-              "$id": "#/properties/wildcard"
-            }
-          }
-        },
-        "managedPlatforms": {
-          "$id": "#/properties/supports/managedPlatforms",
-          "type": "object",
-          "title": "Supported managed Kubernetes environments",
-          "description": "The managed Kubernetes cloud platforms that are fully or partially supported by this software",
-          "patternProperties": {
-            "ibm": {
-              "$id": "#/properties/supports/k8sDistros/icp",
-              "type": "object",
-              "title": "IBM cloud"
-            },
-            "amazon": {
-              "$id": "#/properties/supports/k8sDistros/iks",
-              "type": "object",
-              "title": "Amazon cloud"
-            },
-            "redhat": {
-              "$id": "#/properties/supports/k8sDistros/rhocp3",
-              "type": "object",
-              "title": "RedHat cloud"
-            },
-            "google": {
-              "$id": "#/properties/supports/k8sDistros/rhocp4",
-              "type": "object",
-              "title": "Google cloud"
-            },
-            "microsoft": {
-              "$id": "#/properties/supports/k8sDistros/aks",
-              "type": "object",
-              "title": "Microsoft Azure cloud"
-            },
-            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-              "type": "object",
-              "$id": "#/properties/wildcard"
-            }
-          }
-        },
-        "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-          "type": "object"
-        }
-      }
-    },    
-    "webPage": {
-      "$id": "#/properties/webPage",
-      "type": "string",
-      "title": "Web page",
-      "description": "The web page associated with the product in this CASE",
-      "default": "",
-      "examples": [
-        "http://www.ibm.com"
-      ],
-      "pattern": "^(.*)$"
-    },
-    "licenses": {
-      "$id": "#/properties/licenses",
-      "type": "object",
-      "title": "Software licenses",
-      "description": "Software licenses applicable to this CASE",
-      "patternProperties": {
-        "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
-          "$id": "#/properties/licenses/wildcard",
-          "type": "object",
-          "title": "License reference",
-          "required": [
-            "ref"
+        "specVersion": {
+          "$id": "#/properties/specVersion",
+          "type": "string",
+          "title": "Specification version",
+          "description": "The CASE specification version that this CASE implements",
+          "default": "",
+          "examples": [
+            "1.0.0"
           ],
-          "properties": {
-            "metadata": {
-              "$ref": "metadata.json#/definitions/metadataRef"
+          "pattern": "^(.*)$"
+        },
+        "name": {
+          "$id": "#/properties/name",
+          "type": "string",
+          "title": "CASE name",
+          "description": "The name of the CASE",
+          "default": "",
+          "examples": [
+            "etcd-operator"
+          ],
+          "pattern": "^[a-z_-][A-Za-z0-9_-]{0,49}$"
+        },
+        "displayName": {
+          "$id": "#/properties/displayName",
+          "type": "string",
+          "title": "CASE display name",
+          "description": "The name of this CASE to be displayed to a user interface",
+          "default": "",
+          "examples": [
+            "etcd Operator"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "version": {
+          "$id": "#/properties/version",
+          "type": "string",
+          "title": "CASE version",
+          "description": "The version of this CASE",
+          "default": "",
+          "examples": [
+            "1.0.0",
+            "1.0.0+20191108.173000",
+            "1.0.0+20191108.173000.patch1",
+            "1.0.0-beta.1",
+            "1.0.0-beta.1+20191108.173000.patch1"
+          ],
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(\\d{8}\\.[0-2]\\d[0-5]\\d[0-5]\\d)(?:\\.(?:[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?)?"
+        },
+        "appVersion": {
+          "$id": "#/properties/appVersion",
+          "type": "string",
+          "title": "Application version",
+          "description": "The version of the application represented by this CASE",
+          "default": "0.0.1",
+          "examples": [
+            "1.0.0"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "description": {
+          "$id": "#/properties/description",
+          "type": "string",
+          "title": "CASE description",
+          "description": "The description of this CASE",
+          "default": "",
+          "examples": [
+            "Sample certified container CASE"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "displayDescription": {
+          "$id": "#/properties/displayDescription",
+          "type": "string",
+          "title": "CASE display description",
+          "description": "The description of this CASE to be displayed to a user interface",
+          "default": "",
+          "examples": [
+            "Sample certified container CASE"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "icons": {
+          "$id": "#/properties/icon",
+          "type": "array",
+          "title": "Icon",
+          "description": "The icon schema",
+          "items": {
+            "type" : "object",
+            "properties" : {
+              "base64": {
+                "$id": "#/properties/icons/properties/base64",
+                "title": "Base64 icon",
+                "description": "The base64 encoded binary representation of the image (png or svg)",
+                "type":"string",
+                "default": "",
+                "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+              },
+              "mediaType" : {
+                "$id": "#/properties/icons/properties/mediaType",
+                "title": "Icon media type (MIME)",
+                "description": "The MIME type of the media",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "image/png",
+                  "image/svg+xml"
+                ],
+                "pattern": "^(.*)$"
+              },
+              "url" : {
+                "$id": "#/properties/icons/properties/url",
+                "title": "Icon URL",
+                "description": "The URL of the icon if not embedded",
+                "type": "string",
+                "default": "",
+                "pattern": "^(.*)$"
+              }
+            }
+          }
+        },
+        "organization": {
+          "$id": "#/properties/organization",
+          "type": "string",
+          "description": "The name of the organization that owns or builds this CASE",
+          "default": "",
+          "examples": [
+            "IBM",
+            "Red Hat"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "classifications": {
+          "$id": "#/properties/classification",
+          "type": "object",
+          "title": "CASE license classification",
+          "description": "The classifications describe the license classifications of the software. The software may support multiple classifications. See the CASE Specification for a list of common classifications",
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "type": "object"
+            }
+          }
+        },
+        "certifications": {
+          "$id": "#/properties/certifications",
+          "type": "object",
+          "title": "CASE certifications",
+          "description": "The certifications provide a high level overview of various certifications that this CASE implements or partially implements",
+          "examples": [
+            "ibmccp",
+            "ibmcc"
+          ],
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "$id": "#/properties/certifications/certification",
+              "type": "object",
+              "description": "A certification name",
+              "additionalProperties": true,
+              "properties": {
+                "metadata": {
+                  "$ref": "metadata.json#/definitions/metadataRef"
+                }
+              }
+            }
+          }
+        },
+        "catalogs": {
+          "$id": "#/properties/catalogs",
+          "type": "object",
+          "title": "Catalog categories",
+          "description": "Catalog categories provide high level groupings of information that aid software catalogs and marketplaces to group related software",
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "type": "object"
+            }
+          }
+        },
+        "supports": {
+          "$id": "#/properties/supports",
+          "type": "object",
+          "title": "Supported environments",
+          "description": "Describes the various types of supported environments that this software supports, partially or fully",
+          "patternProperties": {
+            "architectures": {
+              "$id": "#/properties/supports/architectures",
+              "type": "object",
+              "title": "Supported compute architectures",
+              "description": "The compute architectures that this software fully or partially supports. See the CASE Specification for the common architecture keywords",
+              "patternProperties": {
+                "amd64": {
+                  "$id": "#/properties/supports/architectures/amd64",
+                  "type": "object",
+                  "title": "AMD 64-bit"
+                },
+                "ppc64le": {
+                  "$id": "#/properties/supports/architectures/ppc64le",
+                  "type": "object",
+                  "title": "Power PC 64-bit"
+                },
+                "s390x": {
+                  "$id": "#/properties/supports/architectures/s390x",
+                  "type": "object",
+                  "title": "System 390"
+                },
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "type": "object",
+                  "$id": "#/properties/supports/architectures/wildcard"
+                }
+              }
             },
-            "ref": {
-              "$id": "#/properties/licenses/wildcard/ref",
-              "title": "License file name",
-              "description": "The license filename in the licenses directory"
+            "k8sDistros": {
+              "$id": "#/properties/supports/k8sDistros",
+              "type": "object",
+              "title": "Supported Kubernetes distributions",
+              "description": "The compute architectures that this software fully or partially supports. See the CASE Specification for the common architecture keywords",
+              "patternProperties": {
+                "icp": {
+                  "$id": "#/properties/supports/k8sDistros/icp",
+                  "type": "object",
+                  "title": "IBM Cloud Private"
+                },
+                "iks": {
+                  "$id": "#/properties/supports/k8sDistros/iks",
+                  "type": "object",
+                  "title": "IBM Kubernetes Service"
+                },
+                "rhocp3": {
+                  "$id": "#/properties/supports/k8sDistros/rhocp3",
+                  "type": "object",
+                  "title": "RedHat OpenShift Container Platform 3"
+                },
+                "rhocp4": {
+                  "$id": "#/properties/supports/k8sDistros/rhocp4",
+                  "type": "object",
+                  "title": "RedHat OpenShift Container Platform 4"
+                },
+                "aks": {
+                  "$id": "#/properties/supports/k8sDistros/aks",
+                  "type": "object",
+                  "title": "Microsoft Azure"
+                },
+                "gce": {
+                  "$id": "#/properties/supports/k8sDistros/gce",
+                  "type": "object",
+                  "title": "Google Compute Engine"
+                },
+                "eks": {
+                  "$id": "#/properties/supports/k8sDistros/eks",
+                  "type": "object",
+                  "title": "Amazon Enterprise Kubernetes Service"
+                },
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "type": "object",
+                  "$id": "#/properties/wildcard"
+                }
+              }
             },
-            "url": {
-              "$id": "#/properties/licenses/wildcard/url",
-              "title": "License URL",
-              "description": "The URL to the license file (optional)"
+            "managedPlatforms": {
+              "$id": "#/properties/supports/managedPlatforms",
+              "type": "object",
+              "title": "Supported managed Kubernetes environments",
+              "description": "The managed Kubernetes cloud platforms that are fully or partially supported by this software",
+              "patternProperties": {
+                "ibm": {
+                  "$id": "#/properties/supports/k8sDistros/icp",
+                  "type": "object",
+                  "title": "IBM cloud"
+                },
+                "amazon": {
+                  "$id": "#/properties/supports/k8sDistros/iks",
+                  "type": "object",
+                  "title": "Amazon cloud"
+                },
+                "redhat": {
+                  "$id": "#/properties/supports/k8sDistros/rhocp3",
+                  "type": "object",
+                  "title": "RedHat cloud"
+                },
+                "google": {
+                  "$id": "#/properties/supports/k8sDistros/rhocp4",
+                  "type": "object",
+                  "title": "Google cloud"
+                },
+                "microsoft": {
+                  "$id": "#/properties/supports/k8sDistros/aks",
+                  "type": "object",
+                  "title": "Microsoft Azure cloud"
+                },
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "type": "object",
+                  "$id": "#/properties/wildcard"
+                }
+              }
             },
-            "mediaType": {
-              "$id": "#/properties/licenses/wildcard/mediaType",
-              "type":"string",
-              "title": "License media type (MIME)",
-              "description": "Media Type (MIME) of the license file ref",
-              "default": "application/text"
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "type": "object"
+            }
+          }
+        },    
+        "webPage": {
+          "$id": "#/properties/webPage",
+          "type": "string",
+          "title": "Web page",
+          "description": "The web page associated with the product in this CASE",
+          "default": "",
+          "examples": [
+            "http://www.ibm.com"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "licenses": {
+          "$id": "#/properties/licenses",
+          "type": "object",
+          "title": "Software licenses",
+          "description": "Software licenses applicable to this CASE",
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "$id": "#/properties/licenses/wildcard",
+              "type": "object",
+              "title": "License reference",
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "metadata": {
+                  "$ref": "metadata.json#/definitions/metadataRef"
+                },
+                "ref": {
+                  "$id": "#/properties/licenses/wildcard/ref",
+                  "title": "License file name",
+                  "description": "The license filename in the licenses directory"
+                },
+                "url": {
+                  "$id": "#/properties/licenses/wildcard/url",
+                  "title": "License URL",
+                  "description": "The URL to the license file (optional)"
+                },
+                "mediaType": {
+                  "$id": "#/properties/licenses/wildcard/mediaType",
+                  "type":"string",
+                  "title": "License media type (MIME)",
+                  "description": "Media Type (MIME) of the license file ref",
+                  "default": "application/text"
+                }
+              }
             }
           }
         }

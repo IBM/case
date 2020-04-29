@@ -1,0 +1,5 @@
+inventory:
+  metadata:
+    name: loadAirgapResources
+    description:  Load in airgap resources such as images
+  k8sScope: cluster

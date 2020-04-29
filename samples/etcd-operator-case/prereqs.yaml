@@ -78,5 +78,25 @@ prereqs:
 
     helm:                        # If this is here at all, it requires the Helm client to be installed.
       helmV2: 
-        helmVersion: ">2.13.0"
-        tillerVersion: ">2.13.0"
+        helmVersion: ">2.12.0"
+        tillerVersion: ">2.12.0"
+      helmV3:
+        helmVersion: ">3.0.0"
+
+    client:
+      kubectl:
+        command: "kubectl"
+        versionArgs: "version"
+        versionRegex: "GitVersion:\"v1.13.[0-9]*"
+      docker:
+        command: "docker"
+        versionArgs: "--version"
+        versionRegex: "Docker version 1[8-9].d*.d*,.*"
+      oc:
+        command: "oc"
+        versionArgs: "version"
+        versionRegex: "((Client Version: openshift-clients-4.[0-9]*.[0-9]*-[0-9a-zA-Z]*-[0-9a-zA-z]*-*)|GitVersion:\"v4.(0|[1-9][0-9]*).(0|[1-9][0-9]*))"
+      skopeo:
+        command: "skopeo"
+        versionArgs: "--version"
+        versionRegex: "skopeo version 0.1.4[1-9]*"

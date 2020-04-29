@@ -1,0 +1,123 @@
+actions:
+  metadata:
+    name: productInstall
+    description: The actions required to install the etcd cluster resources 
+  actionDefs:
+    # Install the product. The sections below constitute the combination of any install actions
+    # from the other inventory items.
+    install:
+      metadata:
+        name: "install"
+        description: "Installs the etcd operator"
+        case.launcher.type: "script"
+      roles: 
+      - clusterAdmin
+
+      # The system must be Openshift, IBM Cloud, or IBM Cloud Private running on amd64, with
+      # Helm 2 and Kubernetes installed.
+      requires:
+        and: 
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResourceVersions/rbac"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - or:
+          - "/case/prereqs/helm/helmV2"
+          - "/case/prereqs/helm/helmV3"
+        - or:
+          - and: 
+            - "!":
+              - "/case/prereqs/k8sDistros/openshift"
+            - or: 
+              - "/case/prereqs/k8sResources/ibmRestrictedPSP"
+              - "/case/prereqs/k8sResources/etcdControllerPSP"
+          - and: 
+            - "/case/prereqs/k8sDistros/openshift"
+            - or:
+              - "/case/prereqs/k8sResources/ibmRestrictedSCC"
+              - "/case/prereqs/k8sResources/etcdControllerSCC"
+
+      # User must have the ability to create cluster roles, custom resource definitions, namespaces,
+      # service accounts and network policies
+      k8sPermissions:
+        rules:
+        - rule:
+            group: rbac.authorization.k8s.io
+            resource: clusterroles
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+            version: '*'
+        - rule: 
+            group: apiextensions.k8s.io
+            resource: customresourcedefinitions
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+            version: v1beta1
+        - rule: 
+            group: ""
+            resource: "namespaces"
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+        - rule: 
+            group: "extensions"
+            resource: "networkpolicies"
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+        - rule: 
+            group: ""
+            resource: "serviceaccounts"
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
+        # Resolve this permission check ONLY if the prereq resolves to true.
+        - ifExpression: 
+            "!": 
+            - "/case/prereqs/k8sDistros/openshift"
+          rule: 
+            group: policy
+            resource: podsecuritypolicies
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
+        - ifExpression:
+            "/prereqs/k8sDistros/openshift"
+          rule: 
+            group: security.openshift.io
+            resource: securitycontextconstraints
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+          

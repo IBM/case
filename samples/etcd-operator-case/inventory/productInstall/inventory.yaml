@@ -1,0 +1,7 @@
+inventory:
+  # This is the main Operator runtime, which includes namespace-scoped operator.
+  metadata: 
+    name: productInstall
+    displayName: Install etcd
+    displayDescription: Sets up the namespace and installs the etcd Operator
+  k8sScope: namespace

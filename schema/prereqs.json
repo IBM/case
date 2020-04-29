@@ -384,6 +384,59 @@
                   }
                 }
               }
+            },
+            "client": {
+              "$id": "#/properties/prereqs/properties/client",
+              "type": "object",
+              "title": "Client side prerequisite definitions",
+              "description": "A list of client side version prequisites for one or more actions in the CASE",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+                  "$id": "#/properties/prereqs/properties/client/patternProperties",
+                  "type": "object",
+                  "title": "Client side prerequisites",
+                  "description": "The client side prerequisite object",
+                  "required": [
+                    "command"
+                  ],
+                  "properties": {
+                    "metadata ": {
+                      "$ref": "metadata.json#/definitions/metadataRef"
+                    },
+                    "command": {
+                      "$id": "#/properties/prereqs/properties/client/patternProperties/command",
+                      "type": "string",
+                      "title": "Client side command",
+                      "description": "The name of the command needed to be installed on the client.",
+                      "pattern": "^(.*)$"
+                    },
+                    "versionArgs": {
+                      "$id": "#/properties/prereqs/properties/client/patternProperties/versionArgs",
+                      "type": "string",
+                      "title": "Command version arguments",
+                      "description": "The command line arguments needed to retrieve the command's version.",
+                      "default": "--version",
+                      "examples": [
+                        "-v",
+                        "--version"
+                      ],
+                      "pattern": "^(.*)$"
+                    },
+                    "versionRegex": {
+                      "$id": "#/properties/prereqs/properties/client/patternProperties/versionRegex",
+                      "type": "string",
+                      "title": "Command version regex",
+                      "description": "The regex used to match the command's version from the output of the version command.",
+                      "default": "",
+                      "examples": [
+                        "^([0-9]+).([0-9]+).([0-9]+)-*$"
+                      ],
+                      "pattern": "^(.*)$"
+                    }
+                  }
+                }
+              }
             }
           }
         }
