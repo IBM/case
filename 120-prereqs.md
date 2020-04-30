@@ -1,6 +1,6 @@
 # CASE prereqs.yaml Specification
 - [CASE prereqs.yaml Specification](#case-prereqsyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status:  Beta](#status-beta)
   - [Overview](#overview)
   - [Specification](#specification)
     - [k8sResources](#k8sresources)
@@ -89,13 +89,13 @@ The `helm` resource has the following attributes:
 
 
 ### client
-This resolver is used to identify client-side program requirements needed to install the product specified by the CASE.
+This resolver is used to identify client-side environment requirements needed to run an inventory action.
 
 The `client` resource has the following attributes:
 * `<Client Prereq Name>`: A [CASE Property](010-case-structure.md#yaml-file-format) describing the client prerequisite. (Required)
   * `metadata` Describes the client prerequisite.  See [CASE Metadata](010-case-structure.md#Specification-metadata-and-versioning) for details.
   * `command`: The command name expected to be in the system path of the operating system. (Required)
-  * `versionArgs`: The command line arguments needed to retrieve the version of the command. Default: `--version`.
+  * `versionArgs`: The command line arguments needed to retrieve the version of the command. For example, the `versionArgs` parameter for `go version` would be `version`. Default: `--version`.
   * `versionRegex`: The regex to match against the output of the command to verify the expected version is installed. If not specified, any version of the command found in the system path is considered appropriate.
 
 **Note:** The following reserved characters are not allowed in the `command` or `versionArgs` properties: `|` `;` `&` `$` `>` `<` `\` `!` `` ` ``
@@ -155,7 +155,7 @@ The basic comparisons are:
     </tr>
 </table>
 
-Basic comparisons are combined into logical AND and OR combinations. ANDs are specified with spaces between comparison objects and ORs are specified with the standard double-pipe character: `||`. Logical AND is given higher priority than OR and parenthesis are not supported for  
+Basic comparisons are combined into logical AND and OR combinations. ANDs are specified with spaces between comparison objects and ORs are specified with the standard double-pipe character: `||`. Logical AND is given higher priority than OR and parenthesis are not supported.
 
 Examples:
 * This example will support any v1.x version above or equal to 1.11.3:
@@ -163,7 +163,7 @@ Examples:
 * This example will support either versions 1.x through 2.x or versions 3.4.0 and above
   * `>= 1.0 <3.0.0 || >= 3.4.0`
 * To support any version other than 2.11.2:
-  * `>=2.0.0 <2.11.2 || >2.11.2 <3.0` or, more simply:
+  * `<2.11.2 || >2.11.2` or, more simply:
   * `!=2.11.2`
 
 ### Non-functional versions

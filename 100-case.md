@@ -4,6 +4,7 @@
   - [Overview](#overview)
   - [Specification](#specification)
     - [version](#version)
+      - [Regular expression](#regular-expression)
       - [version examples](#version-examples)
     - [supports](#supports)
       - [architectures](#architectures)
@@ -62,7 +63,7 @@ The format of the version in Backus-Naur Form, where several tokens are defined 
 
 The `version core` portion of the version is the typical semver `major.minor.patch` version semantic that descrbes the functional changes that the CASE product has implemented between this version an the previous version.  The `version core` represents the ENTIRE CASE and all components and products within it.
 
-The `version non-functional` portion of the version is located in the first two tokens of the semver build section and is represented by a date/time in the gregorian calendar format: `YYYYMMDD-HHmmSS`, where:
+The `version non-functional` portion of the version is located in the first two tokens of the semver build section and is represented by a date/time in the gregorian calendar format: `YYYYMMDD.HHmmSS`, where:
 - `YYYY` is the year, 
 - `MM` the month (including leading zero), 
 - `DD` the day of the month (including leading zero),

@@ -1,6 +1,6 @@
 # CASE resources.yaml Specification
 - [CASE resources.yaml Specification](#case-resourcesyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status:  Beta](#status-beta)
   - [Overview](#overview)
   - [`resources.yaml` Specification](#resourcesyaml-specification)
   - [CASEs](#cases)
@@ -316,7 +316,7 @@ The basic comparisons are:
     </tr>
 </table>
 
-Basic comparisons are combined into logical AND and OR combinations. ANDs are specified with spaces between comparison objects and ORs are specified with the standard double-pipe character: `||`. Logical AND is given higher priority than OR and parenthesis are not supported for  
+Basic comparisons are combined into logical AND and OR combinations. ANDs are specified with spaces between comparison objects and ORs are specified with the standard double-pipe character: `||`. Logical AND is given higher priority than OR and parenthesis are not supported.
 
 Examples:
 * This example will support any v1.x version above or equal to 1.11.3:
@@ -324,7 +324,7 @@ Examples:
 * This example will support either versions 1.x through 2.x or versions 3.4.0 and above
   * `>= 1.0 <3.0.0 || >= 3.4.0`
 * To support any version other than 2.11.2:
-  * `>=2.0.0 <2.11.2 || >2.11.2 <3.0` or, more simply:
+  * `<2.11.2 || >2.11.2` or, more simply:
   * `!=2.11.2`
 
 ### Which resources can specify ranges?

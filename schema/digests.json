@@ -17,6 +17,11 @@
           "title": "Size",
           "description": "Size in bytes",
           "type": "integer"
+        },
+        "skip": {
+          "title": "Skip",
+          "description": "If true, skip this entry when evaluating the digest",
+          "type": "boolean"
         }
       }
     },
