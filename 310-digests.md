@@ -40,14 +40,11 @@ The `digests.yaml` has the following attributes:
               * `skip`: If true, skip this entry when evaluating the digest.
             * `helmCharts`: Array of digest objects for referenced Helm charts
               * `digest`: Array of digest strings.
-              * `size`: The Helm Archive size. 
+              * `size`: The Helm Archive size.
               * `skip`: If true, skip this entry when evaluating the digest.
-        * `imageManifest`: Image digests by image repository as defined in the [IBM Cloud offline package manifest.yaml](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.2.0/app_center/add_package_offline.html)
-          * `images`: Array of images
-              * `references`: Array of image repositories.
-                * `digest`: The digest of the image.  This is the Docker V2 Repository full length Image ID. See the [docker commandline reference](https://docs.docker.com/engine/reference/commandline/images/#list-the-full-length-image-ids).
-                * `size`: The container image size. 
-                * `skip`: If true, skip this entry when evaluating the digest.
+            * `containerImages`: Array of digest objects for referenced container images
+              * `digest`: Array of digest strings.
+              * `skip`: If true, skip this entry when evaluating the digest.
     * `licenses`: The main license.
       * `digest`: The digest of the license file.
       * `size`:  The file size.
@@ -61,11 +58,10 @@ The `digests.yaml` has the following attributes:
         * `digest`: The digest of the license file.
         * `size`:  The file size.
         * `skip`: If true, skip this entry when evaluating the digest.
-    
+
 
 ### Resource Digests
-Each resource digest is in the following format described in the 
-[OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) specification:
+Each resource digest is in the following format described in the [OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) specification:
 
 ```
 digest                ::= algorithm ":" encoded

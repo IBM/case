@@ -2,9 +2,9 @@
 - [CASE inventory Specification](#case-inventory-specification)
   - [Status: Beta](#status-beta)
   - [Overview](#overview)
-  - [inventory directory specification.](#inventory-directory-specification)
+  - [`inventory` directory specification.](#inventory-directory-specification)
   - [Inventory item directory specification](#inventory-item-directory-specification)
-  - [inventory.yaml Specification](#inventoryyaml-specification)
+  - [`inventory.yaml` Specification](#inventoryyaml-specification)
 
 ## Status:  Beta
 
@@ -46,5 +46,11 @@ Each inventory item directory MAY include the following files:
 
 Each inventory item MAY include an optional `files` folder which includes any embedded resources that should be included the case.  See [resources.yaml](210-resources.md) for details.
 
-## inventory.yaml Specification
+## `inventory.yaml` Specification
 The inventory item name MUST follow the [CASE property specification](010-case-structure.md#yaml-file-format).
+
+The `inventory.yaml` has the following attributes:
+* `inventory`: The resources object. (required)
+  * `metadata`:  Information about the resources.
+  * `k8sScope`: The Kubernetes scope this inventory item applies to.  For example: `cluster` or `namespace`
+  

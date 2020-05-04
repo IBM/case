@@ -4,6 +4,7 @@
   - [Overview](#overview)
   - [Specification](#specification)
     - [version](#version)
+      - [Regular expression](#regular-expression)
       - [version examples](#version-examples)
     - [supports](#supports)
       - [architectures](#architectures)
@@ -50,12 +51,10 @@ The `case.yaml` has the following attributes:
 ### `version`
 A CASE typically represents a single product, but can be composed of many embedded components and products that collectively provide a version.  CASE `version` extends semantic versioning in such a way that allows the CASE producer and consumer to quickly identify the scope of a functional or non-functional change.
 
-The format of the version in Backus-Naur Form, where several tokens are defined in [semver.org](https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions)
+The format of the version in Backus-Naur Form, where several tokens are defined in [semver.org](https://semver.org/#backusnaur-form-grammar-for-valid-semver-versions). Please refer the semver.org documentation for definition of <version core> and <build>.
 ```
 <valid semver>            ::= <version core>
-                            | <version core> "-" <pre-release>
                             | <version core> "+" <version non-functional>
-                            | <version core> "-" <pre-release> "+" <non-functional-version>
 <version core>            ::= <major> "." <minor> "." <patch>
 <version non-functional>  ::= <datetime> |
                               <datetime> "." <build>
@@ -64,7 +63,7 @@ The format of the version in Backus-Naur Form, where several tokens are defined 
 
 The `version core` portion of the version is the typical semver `major.minor.patch` version semantic that descrbes the functional changes that the CASE product has implemented between this version an the previous version.  The `version core` represents the ENTIRE CASE and all components and products within it.
 
-The `version non-functional` portion of the version is located in the first two tokens of the semver build section and is represented by a date/time in the gregorian calendar format: `YYYYMMDD-HHmmSS`, where:
+The `version non-functional` portion of the version is located in the first two tokens of the semver build section and is represented by a date/time in the gregorian calendar format: `YYYYMMDD.HHmmSS`, where:
 - `YYYY` is the year, 
 - `MM` the month (including leading zero), 
 - `DD` the day of the month (including leading zero),
@@ -73,6 +72,26 @@ The `version non-functional` portion of the version is located in the first two 
 - `ss` the second of the minute (including leading zero)
 
 Unlike semver, this specification applies precedence to the `version non-functional` portion of the build to allow sorting and retrieving the latest non-functional version within a given functional version.  If the `version non-functional` value is not supplied, it is assumed to be equivalent to `000000.000000`.
+
+#### Regular expression
+
+The following JavaScript regular expressions show the difference between standard semver and a CASE version.
+
+https://regex101.com/r/i4ZyDs/1
+
+Standard semver:
+```
+^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)
+(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?
+(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+```
+
+CASE Semver
+```
+^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)
+(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?
+(?:\+(\d{8}\.[0-2]\d[0-5]\d[0-5]\d)(?:\.(?:[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)?
+```
 
 #### version examples
 - Initial version without a build.

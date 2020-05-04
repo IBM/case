@@ -1,0 +1,70 @@
+
+resources:
+  metadata:
+    name: etcdOperators
+    displayName: etcd Resources
+    displayDescription: etcd Resources that require a cluster admin to create.
+  resourceDefs:
+    containerImages:
+      # The Catalog Image that the customer consumes for air-gap
+      # This is the ENTIRE graph for an operator package.
+      # Either the workload can create this, or the CICD pipeline can create it.
+      # This is a catalog that is used for mirroring/air-gap
+      # There can only be one of these (one per CASE)
+      - metadata:
+          description: "The latest etcd operator catalog index"
+          operators_operatorframework_io:
+            catalog: # There can only be one of these per CASE
+              # The the version of the catalog index image type.  There is only one currently.
+              mediaType: "registry+v1"
+        image: coreos/etcd-operator-catalog
+        mediaType: application/vnd.oci.image.manifest.v1
+        tag: latest
+        platform:
+          architecture: amd64
+          os: linux
+        registries:
+        - host: quay.io
+
+      # All of the OLM bundle images are included here.
+      # The CICD will use these bundle images to create the various catalogs.
+      - metadata:
+          description: "Obsolete by patch."
+          operators_operatorframework_io:
+            bundle: 
+              # The the version of the bundle image type.  There is only one currently.
+              mediaType: "registry+v1"
+              cpcicd_ibm_com:
+                targetCatalogs:
+                  catalogRefs:
+                  # The CICD knows this means the IBM PublicCurated Catalog
+                  - ibm-public: {}
+
+        image: coreos/etcd-operator-bundle
+        mediaType: application/vnd.oci.image.manifest.v1
+        digest: sha256:66a37fd61a06a43969854ee6d3e21087a98b93838e284a6086b13917f96b0d9b
+        tag: v0.9.1
+        platform:
+          architecture: amd64
+          os: linux
+        registries:
+        - host: quay.io
+
+      - metadata:
+          description: "New patch, supercedes 1.9.1"
+          operators_operatorframework_io:
+            bundle: 
+              mediaType: "registry+v1"
+              cpcicd_ibm_com:
+                targetCatalogs:
+                  catalogRefs:
+                  - ibm-public: {}
+        image: coreos/etcd-operator-bundle
+        mediaType: application/vnd.oci.image.manifest.v1
+        digest: sha256:77a37fd61a06a43969854ee6d3e21087a98b93838e284a6086b13917f96b0d9b
+        tag: v0.9.2
+        platform:
+          architecture: amd64
+          os: linux
+        registries:
+        - host: quay.io

@@ -1,15 +1,20 @@
 # CASE resources.yaml Specification
 - [CASE resources.yaml Specification](#case-resourcesyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status:  Beta](#status-beta)
   - [Overview](#overview)
-  - [resources.yaml Specification](#resourcesyaml-specification)
+  - [`resources.yaml` Specification](#resourcesyaml-specification)
   - [CASEs](#cases)
   - [Helm Charts](#helm-charts)
   - [Container Images](#container-images)
     - [Single platform Image](#single-platform-image)
     - [Multiple Platform Image List](#multiple-platform-image-list)
     - [Registries](#registries)
+    - [Operator Catalog Images](#operator-catalog-images)
+    - [Operator Bundle Images](#operator-bundle-images)
   - [Media Types](#media-types)
+  - [Specifying Version Ranges for Helm Charts and CASEs](#specifying-version-ranges-for-helm-charts-and-cases)
+    - [Which resources can specify ranges?](#which-resources-can-specify-ranges)
+    - [Non-functional versions](#non-functional-versions)
 
 
 ## Status:  Beta
@@ -47,15 +52,20 @@ The `resources.yaml` has the following attributes:
     * **cases**: Array of CASE references.
       * `metadata`:  Metadata about the CASE reference.
       * `case`: The case name.
-      * `version`:  The version of the case.
+      * `version`:  The version of the case or a range of acceptable versions.
       * `repositoryURLs`:  The URLs of the CASE repositories (includes mirrors). (array of strings)
       * `mediaType`: One of:
         * application/vnd.case.core.v1
     * **containerImages**: Array of container image config reference resolvers.
       * `metadata`:  Metadata about the image reference.
-      * `image`: The name of the image. (required)
-      * `tag`: The tag for this version of the image.
-      * `digest`: The [OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) of the file. (required)
+        * `operators_operatorframework_io`: # Metadata specific for Operator Framework Images.
+        *    `catalog`: # Identifies this as an Operator Catalog Image.  There can only be one of these per CASE.
+        *      `mediaType`: "registry+v1"  # The `operator-registry` spec, version 1 of the catalog index image format.
+        *    `bundle`:  # Identifies this as an Operator Bundle Image.
+        *      `mediaType`: "registry+v1"  # The `operator-registry` spec, version 1 of the catalog index image format.
+      * `image`: The name of the image in `<namespace name>/<image name>` format. (required)
+      * `tag`: The tag for this version of the image. (either tag or digest is required)
+      * `digest`: The [OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) of the file.  (either tag or digest is required)
         * Supported algorithms include: [SHA-256](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#sha-256)
       * `mediaType`: One of (required):
         * application/vnd.oci.image.manifest.v1
@@ -81,11 +91,13 @@ The `resources.yaml` has the following attributes:
         * `host`:  The host and optional port in the format `host[:port]`.  Example: `dockerhub.io` or `dockerhub.io:443` (required)
     * **helmCharts**: Array of Helm chart reference resolvers.
       * `metadata`:  Metadata about the Helm Chart reference.
-      * `chart`: The name of the helm chart.
-      * `version`:  The version of the chart.
-      * `repositoryURLs`:  The URLs of the CASE repositories. (includes mirrors) (array of strings)
+      * `chart`: The name of the Helm chart.
+      * `version`:  The version of the chart or a range of acceptable versions.
+      * `repositoryURLs`:  The URLs of the Helm repositories (includes mirrors) (array of strings)
       * `mediaType`: One of:
         * application/vnd.case.resource.helm.chart.v1
+        * application/vnd.case.resource.helm.chart.v2
+        * application/vnd.case.resource.helm.chart.v3
     * **files**:  Array of file object references that are embedded in this CASE inventory item.
       * `metadata`:  Metadata about the file reference.
       * `ref`:  The relative path to the `files` directory.
@@ -152,15 +164,15 @@ containerImages:
       os: linux
     registries:
       - host: docker.io
-  - image: nginx_s390x
+  - image: calico/node
     mediaType: application/vnd.oci.image.manifest.v1
-    tag: 1.17.6
-    digest: sha256:a322661f7bd7c05fd085975d0f10bb6c593ac2d142321e895cfd737f7d7deac3
+    tag: master-amd64
+    digest: sha256:c2f352b7b46fe56a2cc6ef76bdfb490972a02ac40c1fc505ac43be865a59665b
     platform:
-      architecture: s390x
+      architecture: amd64
       os: linux
     registries:
-      - host: docker.io
+      - host: quay.io
 ```
 
 ### Multiple Platform Image List
@@ -214,6 +226,41 @@ Examples:
 
 NOTE: If more than one registry is provided, the image digest MUST NOT change between registries. Mirrored registries and tools like [skopeo](https://github.com/containers/skopeo) support copying images and manifests without changing digests.
 
+### Operator Catalog Images
+The [Operator Framework](https://github.com/operator-framework) uses [Operator Catalog Images](https://github.com/operator-framework/olm-book/blob/master/docs/glossary.md) (or OLM Index Images) to describe a set of operator and update metadata that can be installed onto a cluster via OLM.
+
+See the [operator-registry](https://github.com/operator-framework/operator-registry) git repository and [OLM design doc](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/how-to-update-operators.md) for details.
+
+To identify an Operator Catalog Image, add the additional metadata to the `containerImage` image reference:
+```
+containerImages:
+  - image: nginx-catalog
+    tag: latest
+    metadata:
+      name: nginx-catalog
+      displayName: nginx OLM Catalog Image
+      operators_operatorframework_io:
+        catalog: 
+          mediaType: "registry+v1"
+```
+
+### Operator Bundle Images
+The [Operator Framework](https://github.com/operator-framework) uses [Operator Bundle Images](https://github.com/operator-framework/olm-book/blob/master/docs/glossary.md) to identify a single version of an Operator.  These are currently `scratch` images that have the OLM artifacts that make-up an Operator, including the channel information of that operator and other metadata.  
+
+An Operator Bundle Image is used by the Operator Package Manager ([opm](https://github.com/operator-framework/operator-registry)) tool to build Operator Catalog Images.
+
+```
+containerImages:
+  - image: nginx-bundle
+    tag: 0.9.4
+    metadata:
+      name: nginx-bundle-0.8.4
+      displayName: nginx OLM Bundle Image
+      operators_operatorframework_io:
+        bundle: 
+          mediaType: "registry+v1"
+```
+
 ## Media Types
 The following media types are supported by this CASE specification:
 * application/vnd.case.core.v1:  A CASE.
@@ -222,10 +269,68 @@ The following media types are supported by this CASE specification:
 * application/vnd.case.resource.helm.chart.v3:  A Helm Chart using Helm 3 formatting.
 * application/vnd.case.resource.olm.package.v1: An Operator Lifecycle Manager (OLM) Package.
 * application/vnd.case.resource.k8s.v1+yaml: A [Kubernetes YAML](https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/) resource.
-* application/vnd.case.resource.script.bash.v1:  A Bourne shell script.
+* application/vnd.case.resource.script.bash.v1:  A Bourne shell script compatible with bash 3.x
 * application/vnd.case.resource.image.manifest.v1: An [IBM Cloud offline package manifest.yaml](https://www.ibm.com/support/knowledgecenter/en/SSBS6K_3.2.0/app_center/add_package_offline.html).
 * application/vnd.oci.image.manifest.v1:  An OCI v1 container image manifest in JSON format.
 * application/vnd.docker.distribution.manifest.v1: A Docker v1 container image manifest in JSON format.
 * application/vnd.docker.distribution.manifest.v2: A Docker v2 container image manifest in JSON format.
 * application/vnd.oci.image.index.v1 : An OCI v1 list of image manifests in JSON format.
 * application/vnd.docker.distribution.manifest.list.v2 : A Docker v2 Manifest list _(aka “fat manifest”)_ in JSON format.
+
+Other well known media types can be used to identify files that the CASE has not formally defined.  Many of these types are documented in these locations:
+* [IANA Media Types](https://www.iana.org/assignments/media-types/media-types.xhtml)
+* [Mozilla Mime Types](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Complete_list_of_MIME_types)
+* [text/markdown](https://tools.ietf.org/html/rfc7763)
+* text/x-shellscript:  Use for general shell scripts when the actual script type isn't specifically known (zsh, bourne, csh, etc)
+* text/x-sh:  Use for general bourne shell scripts when the required version of bash isn't known.
+
+## Specifying Version Ranges for Helm Charts and CASEs
+A `Range` is a set of conditions that specify which versions satisfy the prerequisite. This specification utilizes basic comparisons and standard AND/OR logic to define the expected version range.
+
+The basic comparisons are:
+
+<table>
+    <tr>
+        <td>=</td>
+        <td>equal</td>
+    </tr>
+    <tr>
+        <td>!=</td>
+        <td>not equal</td>
+    </tr>
+    <tr>
+        <td>></td>
+        <td>greater than</td>
+    </tr>
+    <tr>
+        <td><</td>
+        <td>less than</td>
+    </tr>
+    <tr>
+        <td>>=</td>
+        <td>greater than or equal</td>
+    </tr>
+    <tr>
+        <td><=</td>
+        <td>less than or equal</td>
+    </tr>
+</table>
+
+Basic comparisons are combined into logical AND and OR combinations. ANDs are specified with spaces between comparison objects and ORs are specified with the standard double-pipe character: `||`. Logical AND is given higher priority than OR and parenthesis are not supported.
+
+Examples:
+* This example will support any v1.x version above or equal to 1.11.3:
+  * `>=1.11.3 <2`
+* This example will support either versions 1.x through 2.x or versions 3.4.0 and above
+  * `>= 1.0 <3.0.0 || >= 3.4.0`
+* To support any version other than 2.11.2:
+  * `<2.11.2 || >2.11.2` or, more simply:
+  * `!=2.11.2`
+
+### Which resources can specify ranges?
+
+Helm Chart and CASE versions can be specified as ranges in resources.yaml since they follow Semantic versioning. Container images cannot specify ranges because digests and tags do not follow a versioning standard.
+
+### Non-functional versions
+
+As stated in the [case.yaml specification](100-case.md#version), CASE supports non-functional versions. These are specified after the standard version and are prefixed with a plus sign (`+`). In order of preference, non-functional versions come after a standard release. For example, `1.0.0 < 1.0.0+20191008.162055`.

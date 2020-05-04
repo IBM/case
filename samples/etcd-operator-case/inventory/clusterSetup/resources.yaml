@@ -20,4 +20,6 @@ resources:
       mediaType: application/vnd.case.resource.k8s.v1+yaml
     - ref: etcd-resources/etcdrestores-crd.yaml
       mediaType: application/vnd.case.resource.k8s.v1+yaml
+    - ref: install.sh
+      mediaType: application/vnd.case.resource.script.bash.v1+launcher
       

@@ -54,6 +54,7 @@ actions:
       requires:
         and:
         - "/case/prereqs/helm/helmV2"
+        - "/case/prereqs/client/helmClient"
         - "/case/prereqs/k8sDistros/kubernetes"
         - "/case/prereqs/k8sResources/workerIntelLinux"
         - "/case/prereqs/k8sResourceVersions/etcdCluster"

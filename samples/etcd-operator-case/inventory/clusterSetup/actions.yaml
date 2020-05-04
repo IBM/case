@@ -4,6 +4,77 @@ actions:
     description: The actions required to install the etcd cluster resources 
   # Install the cluster prerequisites
   actionDefs:
+    setup:
+      metadata:
+        name: "setup"
+        description: "Performs the cluster setup"
+        case.launcher.type: "script"
+      roles: 
+      - clusterAdmin
+
+      requires:
+        and: 
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - or:
+          - "/case/prereqs/k8sDistros/ibmCloud"
+          - "/case/prereqs/k8sDistros/ibmCloudPrivate"
+          - "/case/prereqs/k8sDistros/openshift"
+
+      # User must have the ability to create cluster roles and custom resource definitions
+      k8sPermissions:
+        rules:
+        - rule:
+            group: rbac.authorization.k8s.io
+            resource: clusterroles
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+            version: '*'
+        - rule: 
+            group: apiextensions.k8s.io
+            resource: customresourcedefinitions
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+            version: v1beta1
+
+        # Resolve this permission check ONLY if the prereq resolves to true.
+        - ifExpression: 
+            "!": 
+            - "/case/prereqs/k8sDistros/openshift"
+          rule: 
+            group: policy
+            resource: podsecuritypolicies
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
+        - ifExpression:
+            "/prereqs/k8sDistros/openshift"
+          rule: 
+            group: security.openshift.io
+            resource: securitycontextconstraints
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+
     install:
       metadata:
         name: "install"

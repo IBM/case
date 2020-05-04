@@ -1,0 +1,58 @@
+
+actions:
+  metadata:
+    name: etcdOLMOperators
+    description: etcd OLM Operator Actions
+    displayName: etcd OLM Operator Actions
+    displayDescription: etcd Operator Actions
+  actionDefs:
+    install:
+      metadata :
+        name: install
+        displayName: Install the etcd operator catalog 
+        displayDescription: Install the etcd Operator controller Pods and associated custom resource definitions
+      roles: 
+      - clusterAdmin
+      requires:
+        and: 
+        - "/case/prereqs/k8sDistros/kubernetes"
+        - "/case/prereqs/k8sResourceVersions/rbac"
+        - "/case/prereqs/k8sResources/workerIntelLinux"
+        - or:
+          - and: 
+            - "!":
+              - "/case/prereqs/k8sDistros/openshift"
+            - or: 
+              - "/case/prereqs/k8sResources/ibmRestrictedPSP"
+              - "/case/prereqs/k8sResources/etcdControllerPSP"
+          - and: 
+            - "/case/prereqs/k8sDistros/openshift"
+            - or:
+              - "/case/prereqs/k8sResources/ibmRestrictedSCC"
+              - "/case/prereqs/k8sResources/etcdControllerSCC"
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: '*'
+            verbs:
+            - get
+            - list
+            - watch
+            - create
+            - patch
+            - update
+    remove:
+      metadata :
+        name: remove
+        displayName: Remove
+        displayDescription: Remove the etcd operator and all etcd databases
+      roles: 
+      - namespaceAdmin
+      k8sPermissions:
+        rules:
+        - rule:
+            group: etcd.database.coreos.com
+            resource: '*'
+            verbs:
+            - '*'

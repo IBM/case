@@ -1,0 +1,41 @@
+actions:
+  actionDefs:
+    dockerPull:
+      metadata:
+        name: "dockerPull"
+        description: "Pulls the images in the CSV file to a local registry"
+        case.launcher.type: "script"
+
+      roles: 
+      - clusterAdmin
+
+      requires: "/case/prereqs/client/docker"
+
+      k8sPermissions: 
+        rules: []
+
+    ocMirror:
+      metadata:
+        name: "ocMirror"
+        description: "Mirrors the images to a local registry using oc"
+        case.launcher.type: "script"
+      roles: 
+      - clusterAdmin
+
+      requires: "/case/prereqs/client/oc"
+
+      k8sPermissions:
+        rules: []
+
+    skopeoCopy:
+      metadata:
+        name: "skopeoCopy"
+        description: "Copies the images from one repo to another using skope"
+        case.launcher.type: "script"
+      roles: 
+      - clusterAdmin
+
+      requires: "/case/prereqs/client/skopeo"
+
+      k8sPermissions:
+        rules: []
