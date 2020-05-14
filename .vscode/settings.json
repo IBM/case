@@ -1,0 +1,15 @@
+{
+  "yaml.schemas": {
+    "./schema/case.json": "case.yaml",
+    "./schema/inventory.json": "inventory.yaml",
+    "./schema/prereqs.json": "prereqs.yaml",
+    "./schema/certification.json": "certifications/*.yaml",
+    "./schema/roles.json": "roles.yaml",
+    "./schema/resources.json": "resources.yaml",
+    "./schema/actions.json": "actions.yaml",
+    "./schema/digests.json": "digests.yaml",
+    "./schema/repo-index.json": "samples/case-repo-sample/index.yaml",
+    "./schema/repo-product-index.json": "samples/case-repo-sample/etcd-operator-case/index.yaml",
+    "./schema/repo-product-version.json": "version.yaml"
+  }
+}
