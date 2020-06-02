@@ -9,6 +9,8 @@
     - [Single platform Image](#single-platform-image)
     - [Multiple Platform Image List](#multiple-platform-image-list)
     - [Registries](#registries)
+    - [Operator Catalog Images](#operator-catalog-images)
+    - [Operator Bundle Images](#operator-bundle-images)
   - [Media Types](#media-types)
 
 
@@ -217,6 +219,43 @@ Examples:
 ```
 
 NOTE: If more than one registry is provided, the image digest MUST NOT change between registries. Mirrored registries and tools like [skopeo](https://github.com/containers/skopeo) support copying images and manifests without changing digests.
+
+### Operator Catalog Images
+The [Operator Framework](https://github.com/operator-framework) uses [Operator Catalog Images](https://github.com/operator-framework/olm-book/blob/master/docs/glossary.md) (or OLM Index Images) to describe a set of operator and update metadata that can be installed onto a cluster via OLM.
+
+See the [operator-registry](https://github.com/operator-framework/operator-registry) git repository and [OLM design doc](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/how-to-update-operators.md) for details.
+
+To identify an Operator Catalog Image, add the additional metadata to the `containerImage` image reference:
+```
+containerImages:
+  - image: nginx-catalog
+    tag: latest
+    digest: sha256:284afe487aa9f43074e4d7c9b0a339d25335649ceca193c1c7b43e3908e94dd0
+    metadata:
+      name: nginx-catalog
+      displayName: nginx OLM Catalog Image
+      operators_operatorframework_io:
+        catalog: 
+          mediaType: "registry+v1"
+```
+
+### Operator Bundle Images
+The [Operator Framework](https://github.com/operator-framework) uses [Operator Bundle Images](https://github.com/operator-framework/olm-book/blob/master/docs/glossary.md) to identify a single version of an Operator.  These are currently `scratch` images that have the OLM artifacts that make-up an Operator, including the channel information of that operator and other metadata.  
+
+An Operator Bundle Image is used by the Operator Package Manager ([opm](https://github.com/operator-framework/operator-registry)) tool to build Operator Catalog Images.
+
+```
+containerImages:
+  - image: nginx-bundle
+    tag: 0.9.4
+    digest: sha256:b4e9ee00d392b8a5f97f8fda23e1eb7763408ff560d5a141f9a2b874ae6b14d1
+    metadata:
+      name: nginx-bundle-0.8.4
+      displayName: nginx OLM Bundle Image
+      operators_operatorframework_io:
+        bundle: 
+          mediaType: "registry+v1"
+```
 
 ## Media Types
 The following media types are supported by this CASE specification:
