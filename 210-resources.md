@@ -1,8 +1,8 @@
 # CASE resources.yaml Specification
 - [CASE resources.yaml Specification](#case-resourcesyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status:  Beta](#status-beta)
   - [Overview](#overview)
-  - [resources.yaml Specification](#resourcesyaml-specification)
+  - [`resources.yaml` Specification](#resourcesyaml-specification)
   - [CASEs](#cases)
   - [Helm Charts](#helm-charts)
   - [Container Images](#container-images)
@@ -77,6 +77,7 @@ The `resources.yaml` has the following attributes:
         * `platform`: The platform that the image supports. (required)
             * `architecture`: The architecture the image supports. (required)
             * `os`: The operating system the image supports. (required)
+        * `tag`: The tag for this version of the image. (either tag or digest is required)
       * `registries`:  An array of image repository mirror objects. (at least one is required)
         * `host`:  The host and optional port in the format `host[:port]`.  Example: `dockerhub.io` or `dockerhub.io:443` (required)
     * **helmCharts**: Array of Helm chart reference resolvers.
@@ -183,16 +184,19 @@ containerImages:
     manifests:
       - digest: sha256:a322661f7bd7c05fd085975d0f10bb6c593ac2d142321e895cfd737f7d7deac3
         mediaType: application/vnd.oci.image.manifest.v1
+        tag: 1.17.6-ppc64le
         platform:
           architecture: ppc64le
           os: linux
       - digest: sha256:189cce606b29fb2a33ebc2fcecfa8e33b0b99740da4737133cdbcee92f3aba0a
         mediaType: application/vnd.oci.image.manifest.v1
+        tag: 1.17.6-amd64
         platform:
           architecture: amd64
           os: linux
       - digest: sha256:f5dc44557f1d666381791c3d01300d64899ba7b74dc26f4d681bd1827caf61ca
         mediaType: application/vnd.oci.image.manifest.v1
+        tag: 1.17.6-s390x
         platform:
           architecture: s390x
           os: linux

@@ -310,6 +310,9 @@
                       },
                       "manifests": {
                         "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/manifests"
+                      },
+                      "tag": {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/tag"
                       }
                     },
                     "required": [
