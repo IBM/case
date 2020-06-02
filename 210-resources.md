@@ -57,6 +57,7 @@ The `resources.yaml` has the following attributes:
       * `metadata`:  Metadata about the image reference.
       * `image`: The name of the image. (required)
       * `tag`: The tag for this version of the image.
+        * If no tag is specified, it is assumed to be `latest`
       * `digest`: The [OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) of the file. (required)
         * Supported algorithms include: [SHA-256](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#sha-256)
       * `mediaType`: One of (required):
@@ -80,6 +81,7 @@ The `resources.yaml` has the following attributes:
             * `architecture`: The architecture the image supports. (required)
             * `os`: The operating system the image supports. (required)
         * `tag`: The tag for this version of the image. (either tag or digest is required)
+          * If no tag is specified, then it is assumed to be of the format `<parent-tag>-<os>-<arch>[-variant]`
       * `registries`:  An array of image repository mirror objects. (at least one is required)
         * `host`:  The host and optional port in the format `host[:port]`.  Example: `dockerhub.io` or `dockerhub.io:443` (required)
     * **helmCharts**: Array of Helm chart reference resolvers.
