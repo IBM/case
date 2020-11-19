@@ -54,20 +54,32 @@
           ],
           "pattern": "^(.*)$"
         },
+        "additionalVersions": {
+          "$id": "#/properties/versions",
+          "type": "object",
+          "title": "Additional versions",
+          "description": "Additional versions in the CASE not represented by the well typed version fields",
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "$id": "#/properties/versions/label",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["semver"],
+                "properties": {
+                  "semver": {
+                    "$ref": "version.json#/definitions/semverRef"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "appSemver": {
+          "$ref": "version.json#/definitions/semverRef"
+        },
         "version": {
-          "$id": "#/properties/version",
-          "type": "string",
-          "title": "CASE version",
-          "description": "The version of this CASE",
-          "default": "",
-          "examples": [
-            "1.0.0",
-            "1.0.0+20191108.173000",
-            "1.0.0+20191108.173000.patch1",
-            "1.0.0-beta.1",
-            "1.0.0-beta.1+20191108.173000.patch1"
-          ],
-          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(\\d{8}\\.[0-2]\\d[0-5]\\d[0-5]\\d)(?:\\.(?:[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?)?"
+          "$ref": "version.json#/definitions/semverRef"
         },
         "appVersion": {
           "$id": "#/properties/appVersion",
@@ -254,7 +266,14 @@
                 "rhocp4": {
                   "$id": "#/properties/supports/k8sDistros/rhocp4",
                   "type": "object",
-                  "title": "RedHat OpenShift Container Platform 4"
+                  "title": "RedHat OpenShift Container Platform 4",
+                  "patternProperties": {
+                    "mirrorByDigest": {
+                      "$id": "#/properties/supports/k8sDistros/rhocp4/mirrorByDigest",
+                      "type": "boolean",
+                      "title": "True if this CASE supports image mirroring by digest."
+                    }
+                  }
                 },
                 "aks": {
                   "$id": "#/properties/supports/k8sDistros/aks",

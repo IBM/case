@@ -136,6 +136,59 @@
           }
         }
       }
+    },
+    "resources": {
+      "$id": "#/properties/resources",
+      "type": "object",
+      "title": "Resources",
+      "description": "The resources schema",
+      "required": [
+        "resourceDefs"
+      ],
+      "properties": {
+        "metadata": {
+          "$ref": "metadata.json#/definitions/metadataRef"
+        },
+        "resourceDefs": {
+          "$id": "#/properties/resources/resourceDefs",
+          "type": "object",
+          "title": "Resource definitions",
+          "description": "The resource definitions",
+          "properties": {
+            "files": {
+              "$id": "#/properties/resources/properties/files",
+              "title": "Files",
+              "description": "Other embedded files",
+              "type": "array",
+              "required": [
+                "ref"
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "$ref": "metadata.json#/definitions/metadataRef"
+                  },
+                  "mediaType": {
+                    "$id": "#/properties/resources/properties/files/mediaType",
+                    "type":"string",
+                    "title": "Media type",
+                    "description": "Media Type (MIME) of the resource.",
+                    "default": "text/plain"
+                  },
+                  "ref": {
+                    "$id": "#/properties/resources/properties/files/ref",
+                    "title": "File name reference",
+                    "description": "The file name reference in the files directory.",
+                    "type": "string"
+                  }
+                },
+                "required": ["ref"]
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 # CASE resources.yaml Specification
 - [CASE resources.yaml Specification](#case-resourcesyaml-specification)
-  - [Status:  Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [`resources.yaml` Specification](#resourcesyaml-specification)
   - [CASEs](#cases)
@@ -14,10 +14,10 @@
   - [Media Types](#media-types)
   - [Specifying Version Ranges for Helm Charts and CASEs](#specifying-version-ranges-for-helm-charts-and-cases)
     - [Which resources can specify ranges?](#which-resources-can-specify-ranges)
-    - [Non-functional versions](#non-functional-versions)
+    - [Non-functional CASE versions](#non-functional-case-versions)
 
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The `resources.yaml` includes references to specific resources that are included with a CASE inventory item.
@@ -53,6 +53,7 @@ The `resources.yaml` has the following attributes:
       * `metadata`:  Metadata about the CASE reference.
       * `case`: The case name.
       * `version`:  The version of the case or a range of acceptable versions.
+      * `appSemver`: The semantic version of the application represented by the CASE. This should be reflected everywhere including the JSON.
       * `repositoryURLs`:  The URLs of the CASE repositories (includes mirrors). (array of strings)
       * `mediaType`: One of:
         * application/vnd.case.core.v1
@@ -65,6 +66,7 @@ The `resources.yaml` has the following attributes:
         *      `mediaType`: "registry+v1"  # The `operator-registry` spec, version 1 of the catalog index image format.
       * `image`: The name of the image in `<namespace name>/<image name>` format. (required)
       * `tag`: The tag for this version of the image. (either tag or digest is required)
+        * If no tag is specified, it is assumed to be `latest`
       * `digest`: The [OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) of the file.  (either tag or digest is required)
         * Supported algorithms include: [SHA-256](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#sha-256)
       * `mediaType`: One of (required):
@@ -76,6 +78,7 @@ The `resources.yaml` has the following attributes:
       * `platform`: The platform that the image supports. (required if image is specific to single platform)
         * `architecture`: The architecture the image supports. (required)
         * `os`: The operating system the image supports. (required)
+        * `variant`: The variant of the CPU, for example v8 to specify a particular CPU variant of the 64-bit ARM CPU.
       * `manifests`: List of manifests for platform specific images. (required if the top level image is referencing a manifest list aka "fat-manifest")
         * `digest` : The [OCI Digest](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#digests) of the file. (required)
             * Supported algorithms include: [SHA-256](https://github.com/opencontainers/image-spec/blob/master/descriptor.md#sha-256)
@@ -87,6 +90,9 @@ The `resources.yaml` has the following attributes:
         * `platform`: The platform that the image supports. (required)
             * `architecture`: The architecture the image supports. (required)
             * `os`: The operating system the image supports. (required)
+            * `variant`: The variant of the CPU, for example v8 to specify a particular CPU variant of the 64-bit ARM CPU.
+        * `tag`: The tag for this version of the image. (either tag or digest is required)
+          * If no tag is specified, then it is assumed to be of the format `<parent-tag>-<os>-<arch>[-variant]`
       * `registries`:  An array of image repository mirror objects. (at least one is required)
         * `host`:  The host and optional port in the format `host[:port]`.  Example: `dockerhub.io` or `dockerhub.io:443` (required)
     * **helmCharts**: Array of Helm chart reference resolvers.
@@ -153,10 +159,12 @@ When referencing single platform image:
   * [application/vnd.docker.distribution.manifest.v1](https://docs.docker.com/registry/spec/manifest-v2-1/)
 * The `platform` property is required.
 
+Note: `application/vnd.oci.image.manifest.v1` is not yet widely adopted and `application/vnd.docker.distribution.manifest.v1` does not preserve digest when transfering, so we recommend using `application/vnd.docker.distribution.manifest.v2`.
+
 ```yaml
 containerImages:
   - image: nginx_amd64
-    mediaType: application/vnd.oci.image.manifest.v1
+    mediaType: application/vnd.docker.distribution.manifest.v2
     tag: 1.17.6
     digest: sha256:a322661f7bd7c05fd085975d0f10bb6c593ac2d142321e895cfd737f7d7deac3
     platform:
@@ -165,7 +173,7 @@ containerImages:
     registries:
       - host: docker.io
   - image: calico/node
-    mediaType: application/vnd.oci.image.manifest.v1
+    mediaType: application/vnd.docker.distribution.manifest.v2
     tag: master-amd64
     digest: sha256:c2f352b7b46fe56a2cc6ef76bdfb490972a02ac40c1fc505ac43be865a59665b
     platform:
@@ -183,6 +191,8 @@ When referencing a manifest list _(aka "fat manifest")_ which points to specific
   * [application/vnd.docker.distribution.manifest.list.v2](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list)
 * The `manifests` property is required.
 
+Note: `application/vnd.oci.image.index.v1` is not yet widely adopted, so we recommend using `application/vnd.docker.distribution.manifest.list.v2`.
+
 ```yaml
 containerImages:
   - image: nginx
@@ -191,23 +201,33 @@ containerImages:
       displayName: nginx 1.17.6
     tag: 1.17.6
     digest: sha256:50cf965a6e08ec5784009d0fccb380fc479826b6e0e65684d9879170a9df8566
-    mediaType: application/vnd.oci.image.index.v1
+    mediaType: application/vnd.docker.distribution.manifest.list.v2
     manifests:
       - digest: sha256:a322661f7bd7c05fd085975d0f10bb6c593ac2d142321e895cfd737f7d7deac3
-        mediaType: application/vnd.oci.image.manifest.v1
+        mediaType: application/vnd.docker.distribution.manifest.v2
+        tag: 1.17.6-ppc64le
         platform:
           architecture: ppc64le
           os: linux
       - digest: sha256:189cce606b29fb2a33ebc2fcecfa8e33b0b99740da4737133cdbcee92f3aba0a
-        mediaType: application/vnd.oci.image.manifest.v1
+        mediaType: application/vnd.docker.distribution.manifest.v2
+        tag: 1.17.6-amd64
         platform:
           architecture: amd64
           os: linux
       - digest: sha256:f5dc44557f1d666381791c3d01300d64899ba7b74dc26f4d681bd1827caf61ca
-        mediaType: application/vnd.oci.image.manifest.v1
+        mediaType: application/vnd.docker.distribution.manifest.v2
+        tag: 1.17.6-s390x
         platform:
           architecture: s390x
           os: linux
+      - digest: sha256:189cce606b29fb2a33ebc2fcecfa8e33b0b99740da4737133cdbcee92f3aba0a
+        mediaType: application/vnd.oci.image.manifest.v1
+        tag: 1.17.6-arm64-v8
+        platform:
+          architecture: arm64
+          os: linux
+          variant: v8
     registries:
       - host: docker.io
 ```
@@ -236,9 +256,8 @@ To identify an Operator Catalog Image, add the additional metadata to the `conta
 containerImages:
   - image: nginx-catalog
     tag: latest
+    digest: sha256:284afe487aa9f43074e4d7c9b0a339d25335649ceca193c1c7b43e3908e94dd0
     metadata:
-      name: nginx-catalog
-      displayName: nginx OLM Catalog Image
       operators_operatorframework_io:
         catalog: 
           mediaType: "registry+v1"
@@ -253,9 +272,8 @@ An Operator Bundle Image is used by the Operator Package Manager ([opm](https://
 containerImages:
   - image: nginx-bundle
     tag: 0.9.4
+    digest: sha256:b4e9ee00d392b8a5f97f8fda23e1eb7763408ff560d5a141f9a2b874ae6b14d1
     metadata:
-      name: nginx-bundle-0.8.4
-      displayName: nginx OLM Bundle Image
       operators_operatorframework_io:
         bundle: 
           mediaType: "registry+v1"
@@ -286,6 +304,8 @@ Other well known media types can be used to identify files that the CASE has not
 
 ## Specifying Version Ranges for Helm Charts and CASEs
 A `Range` is a set of conditions that specify which versions satisfy the prerequisite. This specification utilizes basic comparisons and standard AND/OR logic to define the expected version range.
+
+A CASE reference supports both a CASE `version` and application `appSemver` version ranges.  When both are specified, both constraints are ANDed together.
 
 The basic comparisons are:
 
@@ -326,11 +346,13 @@ Examples:
 * To support any version other than 2.11.2:
   * `<2.11.2 || >2.11.2` or, more simply:
   * `!=2.11.2`
+  
+
 
 ### Which resources can specify ranges?
 
-Helm Chart and CASE versions can be specified as ranges in resources.yaml since they follow Semantic versioning. Container images cannot specify ranges because digests and tags do not follow a versioning standard.
+Helm Chart versions and CASE `version`s and `appSemver`s can be specified as ranges in resources.yaml since they follow Semantic versioning. Container images cannot specify ranges because digests and tags do not follow a versioning standard.
 
-### Non-functional versions
+### Non-functional CASE versions
 
 As stated in the [case.yaml specification](100-case.md#version), CASE supports non-functional versions. These are specified after the standard version and are prefixed with a plus sign (`+`). In order of preference, non-functional versions come after a standard release. For example, `1.0.0 < 1.0.0+20191008.162055`.

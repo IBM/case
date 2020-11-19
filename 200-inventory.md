@@ -1,12 +1,12 @@
 # CASE inventory Specification
 - [CASE inventory Specification](#case-inventory-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [`inventory` directory specification.](#inventory-directory-specification)
   - [Inventory item directory specification](#inventory-item-directory-specification)
   - [`inventory.yaml` Specification](#inventoryyaml-specification)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The inventory directory is a collection of inventory items.  Each of the inventory items are included as required or optional entities of the CASE.

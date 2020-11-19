@@ -60,6 +60,12 @@
                     "description": "The version of the CASE",
                     "type": "string"
                   },
+                  "appSemver": {
+                    "$id": "#/properties/resources/properties/cases/appSemver",
+                    "title": "Application semantic version",
+                    "description": "The semver of the application in the CASE",
+                    "type": "string"
+                  },
                   "repositoryURLs": {
                     "$id": "#/properties/resources/properties/cases/repositoryURLs",
                     "title": "CASE repository URL",
@@ -276,6 +282,17 @@
                         "linux",
                         "windows"
                       ]
+                    },
+                    "variant": {
+                      "title": "Variant",
+                      "description": "The CPU variant",
+                      "type": "string",
+                      "examples": [
+                        "v5",
+                        "v6",
+                        "v7",
+                        "v8"
+                      ]
                     }
                   },
                   "required": [
@@ -310,6 +327,9 @@
                       },
                       "manifests": {
                         "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/manifests"
+                      },
+                      "tag": {
+                        "$ref": "#/properties/resources/properties/resourceDefs/properties/containerImages/definitions/tag"
                       }
                     },
                     "required": [
