@@ -51,6 +51,16 @@
                 "1.0.0"
               ],
               "pattern": "^(.*)$"
+            },
+            "latestAppSemver": {
+              "$id": "#/properties/entries/latestAppSemver",
+              "type": "string",
+              "title": "The latest semver application version of the specified CASE.",
+              "default": "",
+              "examples": [
+                "1.0.0"
+              ],
+              "pattern": "^(.*)$"
             }
           }
         }

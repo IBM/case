@@ -1,11 +1,11 @@
 # CASE digests.yaml Specification
 - [CASE digests.yaml Specification](#case-digestsyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
     - [Resource Digests](#resource-digests)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The `digests.yaml` includes digests (cryptographic hashes) of select artifacts within the CASE specification.  Specifically, the artifacts that are not part of the canonical JSON representation of the CASE.  This includes:

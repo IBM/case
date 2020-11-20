@@ -1,10 +1,10 @@
 # CASE roles.yaml Specification
 - [CASE roles.yaml Specification](#case-rolesyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The `roles.yaml` includes metadata about the role an actor can play when running an Action on an Inventory Item.  

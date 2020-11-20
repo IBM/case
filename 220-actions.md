@@ -1,12 +1,12 @@
 # CASE actions.yaml Specification
 - [CASE actions.yaml Specification](#case-actionsyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
   - [Prereq Rules](#prereq-rules)
   - [Kubernetes Permission Rule Example](#kubernetes-permission-rule-example)
 
-## Status:  Beta
+## Status: Stable
 
 
 ## Overview
