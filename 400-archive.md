@@ -1,12 +1,12 @@
 # CASE Archive Specification
 - [CASE Archive Specification](#case-archive-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
     - [Archive Name](#archive-name)
     - [Archive contents](#archive-contents)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 A CASE Archive is TGZ (GZipped Tarball) of the files in the CASE directory structure. 

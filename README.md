@@ -28,7 +28,7 @@ See the [CASE Specification Index](000-index.md) for the specification documenta
 
 The master branch contains the live code changes for the NEXT version.  See branches for snapshots of previous versions.
 
-**Specification Version:  v1.0.0-beta.7**
+**Specification Version:  v1.0.0**
 
 ## Setting up Microsoft Visual Studio Code for Intellisense
 [Microsoft Visual Studio Code](https://code.visualstudio) with some extensions can simplify and validate building the CASE yaml files.

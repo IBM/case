@@ -1,6 +1,6 @@
 # CASE prereqs.yaml Specification
 - [CASE prereqs.yaml Specification](#case-prereqsyaml-specification)
-  - [Status:  Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
     - [k8sResources](#k8sresources)
@@ -13,7 +13,7 @@
   - [Specifying Prerequisite Version Ranges](#specifying-prerequisite-version-ranges)
     - [Non-functional versions](#non-functional-versions)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The `prereqs.yaml` file describes any pre-requisites that the the CASE may require of a target cluster. This specification uses the concept of Resolver to return a boolean result from the body of the object. The resolver can then be referenced by the inventory item [Action rules](220-actions.md#prereq-rules) to construct expressions.

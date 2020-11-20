@@ -1,12 +1,15 @@
 # CASE signature.yaml Specification
 
 - [CASE signature.yaml Specification](#case-signatureyaml-specification)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
     - [What needs to be Signed](#what-needs-to-be-signed)
     - [How can we Avoid Hash Problems?](#how-can-we-avoid-hash-problems)
     - [Workflow for Signing the CASE](#workflow-for-signing-the-case)
     - [Signature Validation](#signature-validation)
+
+## Status: Stable
 
 ## Overview
 
