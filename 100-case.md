@@ -174,6 +174,7 @@ This describes the Kubernetes distributions that are supported by the CASE and p
 * `iks`: IBM Kubernetes Service
 * `rhocp3`: RedHat OpenShift Container Platform 3
 * `rhocp4`: RedHat OpenShift Container Platform 4
+  * `mirrorByDigest`:  `true` if the CASE supports image mirroring by digest, for example, using an ImageContentSourcePolicy (boolean)
 * `aks`: Microsoft Azure
 * `gce`: Google Compute Engine
 * `eks`: Amazon Enterprise Kubernetes Service

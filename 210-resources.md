@@ -160,6 +160,8 @@ When referencing single platform image:
   * [application/vnd.docker.distribution.manifest.v1](https://docs.docker.com/registry/spec/manifest-v2-1/)
 * The `platform` property is required.
 
+Note: `application/vnd.oci.image.manifest.v1` is not yet widely adopted and `application/vnd.docker.distribution.manifest.v1` does not preserve digest when transfering, so we recommend using `application/vnd.docker.distribution.manifest.v2`.
+
 ```yaml
 containerImages:
   - image: nginx_amd64
@@ -189,6 +191,8 @@ When referencing a manifest list _(aka "fat manifest")_ which points to specific
   * [application/vnd.oci.image.index.v1](https://github.com/opencontainers/image-spec/blob/master/image-index.md)
   * [application/vnd.docker.distribution.manifest.list.v2](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list)
 * The `manifests` property is required.
+
+Note: `application/vnd.oci.image.index.v1` is not yet widely adopted, so we recommend using `application/vnd.docker.distribution.manifest.list.v2`.
 
 ```yaml
 containerImages:
@@ -255,8 +259,6 @@ containerImages:
     tag: latest
     digest: sha256:284afe487aa9f43074e4d7c9b0a339d25335649ceca193c1c7b43e3908e94dd0
     metadata:
-      name: nginx-catalog
-      displayName: nginx OLM Catalog Image
       operators_operatorframework_io:
         catalog: 
           mediaType: "registry+v1"
@@ -377,6 +379,8 @@ Examples:
 * To support any version other than 2.11.2:
   * `<2.11.2 || >2.11.2` or, more simply:
   * `!=2.11.2`
+  
+
 
 ### Which resources can specify ranges?
 
