@@ -10,6 +10,7 @@
       - [CASE product index descriptor](#case-product-index-descriptor)
       - [CASE product version descriptor](#case-product-version-descriptor)
     - [Semver and Semver Comparison Formats](#semver-and-semver-comparison-formats)
+      - [Non-functional CASE versions](#non-functional-case-versions)
 
 ## Status: Stable
 
@@ -139,3 +140,7 @@ case:
 
 ### Semver and Semver Comparison Formats
 This specification uses the [Semantic Version 2.0.0 specification](https://semver.org/) (semver) for describing versions of entities.
+
+#### Non-functional CASE versions
+
+As stated in the [case.yaml specification](100-case.md#version), CASE supports non-functional versions. These are specified after the standard version and are prefixed with a plus sign (`+`). In order of preference, non-functional versions come after a standard release. The CASE repo currently only supports non-functional versions in the following date/timestamp format: `YYYYMMDD.HHmmSS`. For example, `1.0.0 < 1.0.0+20191008.162055`. If a non-functional version is specified in any other format, it will be ignored for purposes of version comparison.

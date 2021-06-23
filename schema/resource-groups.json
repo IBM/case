@@ -1,0 +1,68 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "type": "object",
+  "title": "Root schema",
+  "description": "The root of the resourceGroups schema",
+  "required": [
+    "resourceGroups"
+  ],
+  "properties": {
+    "resourceGroups": {
+      "$id": "#/properties/resourceGroups",
+      "type": "object",
+      "title": "ResourceGroups",
+      "description": "Contains the resource group definitions for the CASE",
+      "required": [
+        "resourceGroupsDefs"
+      ],
+      "properties": {
+        "resourceGroupsDefs": {
+          "$id": "#/properties/resourceGroups/resourceGroupsDefs",
+          "type": "object",
+          "title": "Resource groups definitions",
+          "description": "Defines the resourceGroups for the CASE",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "type": "object",
+              "title": "Resource group",
+              "description": "Defines a resource group for a CASE",
+              "required": [
+                "groups"
+              ],
+              "properties": {
+                "metadata ": {
+                  "$ref": "metadata.json#/definitions/metadataRef"
+                },
+                "groups": {
+                  "$id": "#/properties/resourceGroups/resourceGroupsDefs/properties/groups",
+                  "title": "Groups",
+                  "description": "List of groups in the specified resource group",
+                  "type": "array",
+                  "required": [
+                    "name"
+                  ],
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "$id": "#/properties/resources/properties/groups/name",
+                        "type":"string",
+                        "title": "Group name",
+                        "description": "A group name",
+                        "default": "text/plain"
+                      }
+                    },
+                    "required": ["name"]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

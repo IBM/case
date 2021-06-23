@@ -11,6 +11,7 @@
     - [Registries](#registries)
     - [Operator Catalog Images](#operator-catalog-images)
     - [Operator Bundle Images](#operator-bundle-images)
+    - [Container Image Groups](#container-image-groups)
   - [Media Types](#media-types)
   - [Specifying Version Ranges for Helm Charts and CASEs](#specifying-version-ranges-for-helm-charts-and-cases)
     - [Which resources can specify ranges?](#which-resources-can-specify-ranges)
@@ -273,6 +274,38 @@ containerImages:
   - image: nginx-bundle
     tag: 0.9.4
     digest: sha256:b4e9ee00d392b8a5f97f8fda23e1eb7763408ff560d5a141f9a2b874ae6b14d1
+    metadata:
+      operators_operatorframework_io:
+        bundle: 
+          mediaType: "registry+v1"
+```
+
+### Container Image Groups
+
+The container image groups field allows a CASE to define a set of group labels for the images.  This is a metadata labeling mechanism that allows images to be grouped together into buckets.  
+
+```yaml
+containerImages:
+  - image: nginx-bundle
+    tag: 0.9.4
+    digest: sha256:b4e9ee00d392b8a5f97f8fda23e1eb7763408ff560d5a141f9a2b874ae6b14d1
+    groups:
+      demo: {}
+      production: {}
+      smallSizing: {}
+    metadata:
+      operators_operatorframework_io:
+        bundle: 
+          mediaType: "registry+v1"
+```
+
+```yaml
+containerImages:
+  - image: nginx-bundle
+    tag: 0.9.4
+    digest: sha256:b4e9ee00d392b8a5f97f8fda23e1eb7763408ff560d5a141f9a2b874ae6b14d1
+    groups: {} # Note that an image with no groups declared belongs to no groups
+               # this means that this image does not belong to any image grouping
     metadata:
       operators_operatorframework_io:
         bundle: 

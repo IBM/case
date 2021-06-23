@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/ibm/case/master/schema/root.json",
+  "definitions": {
+    "semverRef": {
+      "$id": "#/definitions/semverRef",
+      "title": "Semantic Version",
+      "description": "Defines what a semver looks like in the CASE JSON scheme",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "1.0.0",
+        "1.0.0+20191108.173000",
+        "1.0.0+20191108.173000.patch1",
+        "1.0.0-beta.1",
+        "1.0.0-beta.1+20191108.173000.patch1"
+      ],
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+(\\d{8}\\.[0-2]\\d[0-5]\\d[0-5]\\d)(?:\\.(?:[0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?)?"
+    }
+  }
+}
