@@ -147,7 +147,7 @@ The logical operators and, or, not operate on a set of resolvers.  So a boolean 
 or:
   - and:
     - A
-    - A
+    - B
   - and:
     - not:
       - C
