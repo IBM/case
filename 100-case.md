@@ -1,17 +1,20 @@
 # CASE case.yaml Specification
 - [CASE case.yaml Specification](#case-caseyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
-    - [version](#version)
+    - [`version`](#version)
       - [Regular expression](#regular-expression)
       - [version examples](#version-examples)
-    - [supports](#supports)
-      - [architectures](#architectures)
-      - [k8sDistros](#k8sdistros)
-      - [managedPlatforms](#managedplatforms)
+      - [appSemver vs version](#appsemver-vs-version)
+      - [appSemver vs appVersion](#appsemver-vs-appversion)
+      - [additionalVersions example](#additionalversions-example)
+    - [`supports`](#supports)
+      - [`architectures`](#architectures)
+      - [`k8sDistros`](#k8sdistros)
+      - [`managedPlatforms`](#managedplatforms)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The `case.yaml` file is a YAML document that follows the [CASE YAML rules](010-case-structure.md).  The `case.yaml` is a base object that includes information about the CASE.
@@ -24,8 +27,10 @@ The `case.yaml` has the following attributes:
   * begin with a lower case character
   * contain alpha-numeric characters or the following special characters: `-_`
 * `displayName`: The human readable name of the CASE (optional String).
+* `appSemver`: The semantic version of the application in the CASE.
 * `version`: The Semver 2 version of the CASE (required String).  This version must be updated each time a CASE is updated.  See the [version documentation.](#version)
 * `appVersion`: The version of the application or product that this CASE represents.  This value can be any string that matches the organization versioning standards.
+* `additionalVersions`: This is a listing of any additional versions the CASE may need to represent that is not included in the `version`, `appSemver` or `appVersion` fields.
 * `description`:  The description of the CASE (required String).
 * `displayDescription`:  The displayable description of the CASE (optional String).
 * `icons`:  An array of encoded icon definitions for the project (optional)
@@ -122,6 +127,25 @@ CASE Semver
   `1.1.1+20200117.080221`
 
 
+#### appSemver vs version
+
+The `appSemver` portion of the CASE is the semver representation of the application in the CASE.  The `version` portion of the CASE is the semver of the actual CASE itself.  If the underlying installer (launch) technology changes in the CASE or metadata in the CASE changes, then the  `version` field must change as well. The `appSemver` field for the CASE only changes when the version of the application underneath the CASE changes.  
+
+#### appSemver vs appVersion
+
+The `appVersion` portion of the CASE is the marketing representation of the application.  This version can be a semver compliant format, but it can be any string value that represents the customer facing version of the application.  The `appSemver` portion of the CASE is mandated to be semver compliant format, for use in ordering and querying a CASE repository.  
+
+#### additionalVersions example
+
+```yaml
+additionalVersions:
+  ibmCPDMinVersion: 
+    - semver: 1.0.0
+  ibmCPLauncherVersions:
+    - semver: 1.0.4
+    - semver: 2.1.2
+```
+ 
 
 ### `supports`
 The supports CASE object defines various features that are supported by the CASE and product defined in the case.  Specific details are described in the inventory items.

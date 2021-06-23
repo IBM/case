@@ -1,12 +1,12 @@
 # CASE actions.yaml Specification
 - [CASE actions.yaml Specification](#case-actionsyaml-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
   - [Prereq Rules](#prereq-rules)
   - [Kubernetes Permission Rule Example](#kubernetes-permission-rule-example)
 
-## Status:  Beta
+## Status: Stable
 
 
 ## Overview
@@ -14,7 +14,7 @@ The `actions.yaml` includes the actions that can be applied to the inventory ite
 
 ## Specification
 * `actions`: The actions object (required)
-  * `metadata`: Information about the actions desribed in this file
+  * `metadata`: Information about the actions described in this file
   * `actionDefs`: The actions.
     * `<Action>`: A [CASE Property](100-case.md##YAML-File-Format) defining the action.  For example: `install` (required)
       * `metadata`:  Describing the action.  See [CASE Metadata](010-case-structure.md#Specification-metadata-and-versioning) for details. 
@@ -39,32 +39,32 @@ Prerequisite resolvers can be referenced as logical expressions using a subset o
 Example:
 ```
 actions:
-  install:
-    ...
-    requires:
-      and: 
-        - or:
-          - "/case/prereqs/k8sDistros/ibmCloud"
-          - "/case/prereqs/k8sDistros/ibmCloudPrivate"
-          - "/case/prereqs/k8sDistros/openshift"
-        - or:
-          - and: 
-            - "!":
-              - "/case/prereqs/k8sDistros/openshift"
-            - or: 
-              - "/case/prereqs/k8sResources/ibmRestrictedPSP"
-              - "/case/prereqs/k8sResources/etcdControllerPSP"
-          - and: 
+  actionDefs:
+    install:
+      ...
+      requires:
+        and: 
+          - or:
+            - "/case/prereqs/k8sDistros/ibmCloud"
             - "/case/prereqs/k8sDistros/openshift"
-            - or:
-              - "/case/prereqs/k8sResources/ibmRestrictedSCC"
-              - "/case/prereqs/k8sResources/etcdControllerSCC"
+          - or:
+            - and: 
+              - "!":
+                - "/case/prereqs/k8sDistros/openshift"
+              - or: 
+                - "/case/prereqs/k8sResources/ibmRestrictedPSP"
+                - "/case/prereqs/k8sResources/etcdControllerPSP"
+            - and: 
+              - "/case/prereqs/k8sDistros/openshift"
+              - or:
+                - "/case/prereqs/k8sResources/ibmRestrictedSCC"
+                - "/case/prereqs/k8sResources/etcdControllerSCC"
 ```
 
 This translates to:
 
 * Install if:
-  * Either the Kubernetes distribution is ibmCloud, ibmCloudPrivate or openshift
+  * Either the Kubernetes distribution is ibmCloud or openshift
   * AND 
     * if openshift, then either the ibmRestrictedSCC or etcdControllerSCC resources must be installed.
     * if not openshift, then either the ibmRestrictedPSP or etcdControllerPSP resources must be installed. 
@@ -74,39 +74,40 @@ This translates to:
 Example Rule:
 ```
 actions:
-  install:
-    ...
-    k8sPermissions:
-      rules:
-      - ifExpression
-        - "!": 
-          - "/case/prereqs/k8sDistros/openshift"
-        apiGroups:
-        - extensions
-        resources:
-        - podsecuritypolicies
-        verbs:
-        - get
-        - list
-        - watch
-        - create
-        - patch
-        - update
-        version: '*'
+  actionDefs:
+    install:
+      ...
+      k8sPermissions:
+        rules:
+        - ifExpression
+          - "!": 
+            - "/case/prereqs/k8sDistros/openshift"
+          apiGroups:
+          - extensions
+          resources:
+          - podsecuritypolicies
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - patch
+          - update
+          version: '*'
 
-      - ifExpression:
-          "/case/prereqs/k8sDistros/openshift"
-        apiGroups: 
-        - security.openshift.io
-        resources:
-        - securitycontextconstraints
-        verbs:
-        - get
-        - list
-        - watch
-        - create
-        - patch
-        - update
+        - ifExpression:
+            "/case/prereqs/k8sDistros/openshift"
+          apiGroups: 
+          - security.openshift.io
+          resources:
+          - securitycontextconstraints
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - patch
+          - update
 ```
 
 This translates to:

@@ -51,7 +51,7 @@ if [[ ! -d "${DESTINATION}" ]]; then
     exit 1
 fi
 
-if ! SOURCE_FULL_PATH=$(cd "${SOURCE}" || exit; echo "${PWD}"); then
+if ! SOURCE_FULL_PATH=$(cd "${SOURCE}" >/dev/null || exit; echo "${PWD}"); then
     echo "An error occurred accessing source_dir argument ${SOURCE}"
     exit 1
 fi
@@ -92,18 +92,22 @@ function scan_files_and_write_output() {
     while read -r line; do
         echo "... $line ..."
         # get the mimetype for the file and adjust it for any known filetypes
-        if INITIAL_FILETYPE=$(file -b --mime-type "${line}"); then
+        if INITIAL_FILETYPE=$(file -b -L --mime-type "${line}"); then
             if [[ ${INITIAL_FILETYPE} == "text/plain" && $(basename -- "${line}") == manifest.yaml ]]; then
                 FINAL_FILETYPE="application/vnd.case.resource.image.manifest.v1"
-            elif [[ ${INITIAL_FILETYPE} == "text/plain" && $(basename -- "${line}") == *.yaml ]]; then
+            elif [[ ( ${INITIAL_FILETYPE} == "text/plain" || ${INITIAL_FILETYPE} == "inode/x-empty" ) && $(basename -- "${line}") == *.yaml ]]; then
                 FINAL_FILETYPE="application/vnd.case.resource.k8s.v1+yaml"
+            elif [[ ${INITIAL_FILETYPE} == text/* && $(basename -- "${line}") == launch.sh ]]; then 
+                FINAL_FILETYPE="application/vnd.case.resource.script.bash.v1+launcher" 
+            elif [[ ${INITIAL_FILETYPE} == text/* && $(basename -- "${line}") == *.sh ]]; then 
+                FINAL_FILETYPE="application/vnd.case.resource.script.bash.v1"
             else
                 FINAL_FILETYPE="${INITIAL_FILETYPE}"
             fi
         fi
         cat << EOF >> "${DESTINATION}"/resources.yaml
-      - ref: ${line#$SOURCE_FULL_PATH/}
-        mediaType: ${FINAL_FILETYPE}
+    - mediaType: ${FINAL_FILETYPE}
+      ref: ${line#$SOURCE_FULL_PATH/}
 EOF
     done <<< "${FILES}"
 }
@@ -111,7 +115,7 @@ EOF
 # starting point for this script
 function main() {
     # use find to dereference any symbolic links and report any files it finds
-    if ! FILES=$(find -L "${SOURCE_FULL_PATH}" -name "*" -type f 2>/dev/null | grep '.'); then
+    if ! FILES=$(find -L "${SOURCE_FULL_PATH}" -name "*" -type f 2>/dev/null | grep '.' | sort); then
         echo "No files found. Exting without generating a file."
         return 1
     fi

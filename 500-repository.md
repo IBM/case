@@ -1,7 +1,7 @@
 # CASE Repository Specification
 
 - [CASE Repository Specification](#case-repository-specification)
-  - [Status:  Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
   - [Files and Folders](#files-and-folders)
@@ -10,8 +10,9 @@
       - [CASE product index descriptor](#case-product-index-descriptor)
       - [CASE product version descriptor](#case-product-version-descriptor)
     - [Semver and Semver Comparison Formats](#semver-and-semver-comparison-formats)
+      - [Non-functional CASE versions](#non-functional-case-versions)
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 The CASE repository is a location where CASE packages can be stored and shared. The folder and file names are well-defined such that traversing through the repository can be done without querying the contents of a directory.
@@ -45,6 +46,7 @@ The repository base index provides a list of all of the CASEs hosted in the repo
   * `<CASE>`: The name of the CASE
     * `latestVersion`: The latest version of the CASE in the repository (Required)
     * `latestAppVersion`: The latest application version of this CASE in the repository (Required)
+    * `latestAppSemver`: The latest semver representation of the application of this CASE in the repository
 
 Example:
 
@@ -57,6 +59,7 @@ entries:
   redis-case:
     latestVersion: 1.2.1
     latestAppVersion: 5.0.0
+    latestAppSemver: 5.0.0
 ```
 
 #### CASE product index descriptor
@@ -66,9 +69,11 @@ The CASE product index provides additional information about the product includi
 * `apiVersion`: The CASE repository index API version. (Required)
 * `latestVersion`: The latest version of the CASE in the repository (Required)
 * `latestAppVersion`: The latest application version of this CASE in the repository (Required)
+* `latestAppSemver`: The latest semver representation of the application of this CASE in the repository
 * `versions`: A list of versions of the CASE available in the repository (Required)
   * `<Version>`: The CASE version
     * `appVersion`: The application version associated with this version of the CASE (Required)
+    * `appSemver`: The semver application version associated with this version of the CASE
 
 Example:
 
@@ -76,9 +81,14 @@ Example:
 apiVersion: v1
 latestVersion: "1.0.0"
 latestAppVersion: "3.0.0"
+latestAppSemver: "3.0.0"
 versions:
+  0.9.0:
+    appVersion: "2.0.0"
+    appSemver: "2.0.0"
   1.0.0:
     appVersion: "3.0.0"
+    appSemver: "3.0.0"
 ```
 
 #### CASE product version descriptor
@@ -100,6 +110,7 @@ case:
   apiVersion: v1
   version: 1.0.0
   appVersion: 1.0.0
+  appSemver: 1.0.0
   name: etcd-operator-case
   displayName: "Sample IBM certified container CASE"
   description: "Sample IBM certified container CASE"
@@ -129,3 +140,7 @@ case:
 
 ### Semver and Semver Comparison Formats
 This specification uses the [Semantic Version 2.0.0 specification](https://semver.org/) (semver) for describing versions of entities.
+
+#### Non-functional CASE versions
+
+As stated in the [case.yaml specification](100-case.md#version), CASE supports non-functional versions. These are specified after the standard version and are prefixed with a plus sign (`+`). In order of preference, non-functional versions come after a standard release. The CASE repo currently only supports non-functional versions in the following date/timestamp format: `YYYYMMDD.HHmmSS`. For example, `1.0.0 < 1.0.0+20191008.162055`. If a non-functional version is specified in any other format, it will be ignored for purposes of version comparison.

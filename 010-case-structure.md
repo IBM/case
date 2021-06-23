@@ -1,7 +1,7 @@
 # CASE Directory and File Structure Specification
 
 - [CASE Directory and File Structure Specification](#case-directory-and-file-structure-specification)
-  - [Status: Beta](#status-beta)
+  - [Status: Stable](#status-stable)
   - [Overview](#overview)
   - [Specification](#specification)
     - [Files and Folders](#files-and-folders)
@@ -13,7 +13,7 @@
     - [Semver and Semver Comparision Formats](#semver-and-semver-comparision-formats)
 
 
-## Status:  Beta
+## Status: Stable
 
 ## Overview
 
@@ -147,7 +147,7 @@ The logical operators and, or, not operate on a set of resolvers.  So a boolean 
 or:
   - and:
     - A
-    - A
+    - B
   - and:
     - not:
       - C
