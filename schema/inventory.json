@@ -29,6 +29,17 @@
             "cluster"
           ],
           "pattern": "^(.*)$"
+        },
+        "groups": {
+          "$id": "#/properties/resources/properties/resourceDefs/properties/containerImages/groups",
+          "title": "Groups",
+          "description": "The groups an image belongs to",
+          "type": "object",
+          "patternProperties": {
+            "^[a-z_$][A-Za-z0-9_$]{0,49}$": {
+              "type": "object"
+            }
+          }
         }
       }
     }

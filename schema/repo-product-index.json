@@ -41,6 +41,16 @@
       ],
       "pattern": "^(.*)$"
     },
+    "latestAppSemver": {
+      "$id": "#/properties/latestAppSemver",
+      "type": "string",
+      "title": "The semver of the application represented by this case",
+      "default": "0.0.1",
+      "examples": [
+        "1.0.0"
+      ],
+      "pattern": "^(.*)$"
+    },
     "versions": {
       "$id": "#/properties/versions",
       "type": "object",
@@ -58,6 +68,17 @@
               "$id": "#/properties/versions/properties/appVersion",
               "type": "string",
               "title": "The appplication version associated with this CASE version",
+              "default": "",
+              "examples": [
+                "1.0.0",
+                "1.0.1"
+              ],
+              "pattern": "^(.*)$"
+            },
+            "appSemver": {
+              "$id": "#/properties/versions/properties/appSemver",
+              "type": "string",
+              "title": "The appplication semantic version associated with this CASE version",
               "default": "",
               "examples": [
                 "1.0.0",
