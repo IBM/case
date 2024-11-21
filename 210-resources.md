@@ -76,6 +76,8 @@ The `resources.yaml` has the following attributes:
         * application/vnd.docker.distribution.manifest.v1
         * application/vnd.oci.image.index.v1
         * application/vnd.docker.distribution.manifest.list.v2
+
+        Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.v2+json).
       * `platform`: The platform that the image supports. (required if image is specific to single platform)
         * `architecture`: The architecture the image supports. (required)
         * `os`: The operating system the image supports. (required)
@@ -88,6 +90,8 @@ The `resources.yaml` has the following attributes:
           * application/vnd.docker.distribution.manifest.v2
           * application/vnd.docker.distribution.manifest.v1
           * application/vnd.oci.image.index.v1
+
+          Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.v2+json).
         * `platform`: The platform that the image supports. (required)
             * `architecture`: The architecture the image supports. (required)
             * `os`: The operating system the image supports. (required)
@@ -158,6 +162,8 @@ When referencing single platform image:
   * [application/vnd.oci.image.manifest.v1](https://github.com/opencontainers/image-spec/blob/master/manifest.md#image-manifest)
   * [application/vnd.docker.distribution.manifest.v2](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#image-manifest-field-descriptions)
   * [application/vnd.docker.distribution.manifest.v1](https://docs.docker.com/registry/spec/manifest-v2-1/)
+
+  Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.v2+json).
 * The `platform` property is required.
 
 Note: `application/vnd.oci.image.manifest.v1` is not yet widely adopted and `application/vnd.docker.distribution.manifest.v1` does not preserve digest when transfering, so we recommend using `application/vnd.docker.distribution.manifest.v2`.
@@ -190,6 +196,8 @@ When referencing a manifest list _(aka "fat manifest")_ which points to specific
 * one of the following `mediaType` is required:
   * [application/vnd.oci.image.index.v1](https://github.com/opencontainers/image-spec/blob/master/image-index.md)
   * [application/vnd.docker.distribution.manifest.list.v2](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list)
+
+  Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.list.v2+json).
 * The `manifests` property is required.
 
 Note: `application/vnd.oci.image.index.v1` is not yet widely adopted, so we recommend using `application/vnd.docker.distribution.manifest.list.v2`.
