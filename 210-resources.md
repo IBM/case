@@ -5,6 +5,7 @@
   - [`resources.yaml` Specification](#resourcesyaml-specification)
   - [CASEs](#cases)
   - [Helm Charts](#helm-charts)
+  - [Helm Charts Non OLM](#helm-charts-non-olm)
   - [Container Images](#container-images)
     - [Single platform Image](#single-platform-image)
     - [Multiple Platform Image List](#multiple-platform-image-list)
@@ -31,6 +32,7 @@ The resolvers described below are:
 * `cases`: Other CASEs included with this inventory item.  CASEs can be referenced as a pre-requisite or part of the item inventory (here).  By including them in the inventory, they are considered PART of the workflow and included in the certification of the CASE.
 * `containerImages`: Container images for this inventory item. This includes both the container images needed to install the inventory item as well as container images that may be used by the inventory item. For example, a Kubernetes Operator needs an image for the Operator's controller, but that controller may create additional Pods using one or more different images. All images in question must be included in the `containerImages` resolver.
 * `helmCharts`: Helm Charts included with this inventory item.
+* `helmChartsNonOLM`: Helm Charts included with this inventory item. (**Note:** Supported with ibm-pak version `v1.18.0` or higher)
 
 
 Example Resolver to Registry mapping (not part of this specifiction):
@@ -76,6 +78,8 @@ The `resources.yaml` has the following attributes:
         * application/vnd.docker.distribution.manifest.v1
         * application/vnd.oci.image.index.v1
         * application/vnd.docker.distribution.manifest.list.v2
+
+        Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.v2+json).
       * `platform`: The platform that the image supports. (required if image is specific to single platform)
         * `architecture`: The architecture the image supports. (required)
         * `os`: The operating system the image supports. (required)
@@ -88,6 +92,8 @@ The `resources.yaml` has the following attributes:
           * application/vnd.docker.distribution.manifest.v2
           * application/vnd.docker.distribution.manifest.v1
           * application/vnd.oci.image.index.v1
+
+          Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.v2+json).
         * `platform`: The platform that the image supports. (required)
             * `architecture`: The architecture the image supports. (required)
             * `os`: The operating system the image supports. (required)
@@ -97,6 +103,15 @@ The `resources.yaml` has the following attributes:
       * `registries`:  An array of image repository mirror objects. (at least one is required)
         * `host`:  The host and optional port in the format `host[:port]`.  Example: `dockerhub.io` or `dockerhub.io:443` (required)
     * **helmCharts**: Array of Helm chart reference resolvers.
+      * `metadata`:  Metadata about the Helm Chart reference.
+      * `chart`: The name of the Helm chart.
+      * `version`:  The version of the chart or a range of acceptable versions.
+      * `repositoryURLs`:  The URLs of the Helm repositories (includes mirrors) (array of strings)
+      * `mediaType`: One of:
+        * application/vnd.case.resource.helm.chart.v1
+        * application/vnd.case.resource.helm.chart.v2
+        * application/vnd.case.resource.helm.chart.v3
+    * **helmChartsNonOLM**: Array of Helm chart reference resolvers. (**Note:** Supported with ibm-pak version `v1.18.0` or higher)
       * `metadata`:  Metadata about the Helm Chart reference.
       * `chart`: The name of the Helm chart.
       * `version`:  The version of the chart or a range of acceptable versions.
@@ -145,6 +160,22 @@ resources:
 
 The resolver will connect to the `repositoryURL` and retrieve or validate version 1.3.1 of the `mysql` chart.
 
+## Helm Charts Non OLM
+Helm charts are referenced in the `helmChartsNonOLM` resource definitions section: (**Note:** Supported with ibm-pak version `v1.18.0` or higher)
+
+Example:
+```yaml
+resources:
+  ...
+  resourceDefs:
+    helmChartsNonOLM:
+      - chart:  mysql
+        version: 1.3.1
+        repositoryURLs:
+          - https://kubernetes-charts.storage.googleapis.com
+        mediaType: application/vnd.case.resource.helm.chart.v1
+```
+
 ## Container Images
 
 Container images are now referenced in the `containerImages` resource definitions section:
@@ -158,6 +189,8 @@ When referencing single platform image:
   * [application/vnd.oci.image.manifest.v1](https://github.com/opencontainers/image-spec/blob/master/manifest.md#image-manifest)
   * [application/vnd.docker.distribution.manifest.v2](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#image-manifest-field-descriptions)
   * [application/vnd.docker.distribution.manifest.v1](https://docs.docker.com/registry/spec/manifest-v2-1/)
+
+Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.v2+json).
 * The `platform` property is required.
 
 Note: `application/vnd.oci.image.manifest.v1` is not yet widely adopted and `application/vnd.docker.distribution.manifest.v1` does not preserve digest when transfering, so we recommend using `application/vnd.docker.distribution.manifest.v2`.
@@ -190,6 +223,8 @@ When referencing a manifest list _(aka "fat manifest")_ which points to specific
 * one of the following `mediaType` is required:
   * [application/vnd.oci.image.index.v1](https://github.com/opencontainers/image-spec/blob/master/image-index.md)
   * [application/vnd.docker.distribution.manifest.list.v2](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list)
+
+Note: The media types listed above may also include the +json suffix (e.g., application/vnd.docker.distribution.manifest.list.v2+json).
 * The `manifests` property is required.
 
 Note: `application/vnd.oci.image.index.v1` is not yet widely adopted, so we recommend using `application/vnd.docker.distribution.manifest.list.v2`.
