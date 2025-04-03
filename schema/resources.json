@@ -43,7 +43,7 @@
                   },
                   "mediaType": {
                     "$id": "#/properties/resources/properties/cases/mediaType",
-                    "type":"string",
+                    "type": "string",
                     "title": "Media type",
                     "description": "Media Type (MIME) of the resource.",
                     "default": "application/vnd.case.core.v1"
@@ -76,7 +76,9 @@
                     }
                   }
                 },
-                "required": ["case"]
+                "required": [
+                  "case"
+                ]
               }
             },
             "helmCharts": {
@@ -95,7 +97,7 @@
                   },
                   "mediaType": {
                     "$id": "#/properties/resources/properties/helmCharts/mediaType",
-                    "type":"string",
+                    "type": "string",
                     "title": "Media type",
                     "description": "Media Type (MIME) of the resource.",
                     "default": "application/vnd.case.resource.helm.chart.v1"
@@ -122,7 +124,57 @@
                     }
                   }
                 },
-                "required": ["chart"]
+                "required": [
+                  "chart"
+                ]
+              }
+            },
+            "helmChartsNonOLM": {
+              "$id": "#/properties/resources/properties/helmCharts",
+              "title": "Helm chart references",
+              "description": "Helm chart references",
+              "type": "array",
+              "required": [
+                "chart"
+              ],
+              "items": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "$ref": "metadata.json#/definitions/metadataRef"
+                  },
+                  "mediaType": {
+                    "$id": "#/properties/resources/properties/helmCharts/mediaType",
+                    "type": "string",
+                    "title": "Media type",
+                    "description": "Media Type (MIME) of the resource.",
+                    "default": "application/vnd.case.resource.helm.chart.v1"
+                  },
+                  "chart": {
+                    "$id": "#/properties/resources/properties/helmCharts/chart",
+                    "title": "Chart name",
+                    "description": "The name of the chart.",
+                    "type": "string"
+                  },
+                  "version": {
+                    "$id": "#/properties/resources/properties/helmCharts/version",
+                    "title": "Chart version",
+                    "description": "The version of the chart.",
+                    "type": "string"
+                  },
+                  "repositoryURLs": {
+                    "$id": "#/properties/resources/properties/helmCharts/repositoryURLs",
+                    "title": "Helm repository URLs",
+                    "description": "Helm repository URLs",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "chart"
+                ]
               }
             },
             "files": {
@@ -141,7 +193,7 @@
                   },
                   "mediaType": {
                     "$id": "#/properties/resources/properties/files/mediaType",
-                    "type":"string",
+                    "type": "string",
                     "title": "Media type",
                     "description": "Media Type (MIME) of the resource.",
                     "default": "text/plain"
@@ -153,7 +205,9 @@
                     "type": "string"
                   }
                 },
-                "required": ["ref"]
+                "required": [
+                  "ref"
+                ]
               }
             },
             "containerImages": {
