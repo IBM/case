@@ -39,10 +39,9 @@ Example Resolver to Registry mapping (not part of this specifiction):
 
 | Resolver| Media Type | Repositories/Registries |
 | --------| ---------- | ------------------- |
-| cases | application/vnd.case.core.v1 | https://raw.githubusercontent.com/IBM/cases/master/repo/stable |
-| cases | application/vnd.case.core.v1 | https://raw.githubusercontent.com/IBM/cases/master/repo/community |
+| cases | application/vnd.case.core.v1 | https://raw.githubusercontent.com/IBM/cloud-pak/master/repo/case |
 | containerImages | application/vnd.oci.image.manifest.v1 | https://quay.io |
-| helmCharts | application/vnd.case.resource.helm.chart.v1 | https://raw.githubusercontent.com/IBM/cases/master/repo/community |
+| helmCharts | application/vnd.case.resource.helm.chart.v1 | https://raw.githubusercontent.com/IBM/charts/master/repo/ibm-helm |
 
 This diagram illustrates how a Resource Resolver can use the Mapping to retrieve and validate the inventory item resources:
 ![alt text](design/case-resource-retrieval.drawio.png "CASE Resource Retrieval Flow")
@@ -134,10 +133,10 @@ resources:
   ...
   resourceDefs:
     cases:
-      - case:  mysql
+      - case:  ibm-sample
         version: 1.3.1
         repositoryURLs:
-          - https://raw.githubusercontent.com/IBM/cases/master/repo/community
+          - https://raw.githubusercontent.com/IBM/cloud-pak/master/repo/case
         mediaType: application/vnd.case.core.v1
 ```
 
@@ -151,14 +150,14 @@ resources:
   ...
   resourceDefs:
     helmCharts:
-      - chart:  mysql
+      - chart:  ibm-sch
         version: 1.3.1
         repositoryURLs:
-          - https://kubernetes-charts.storage.googleapis.com
+          - https://raw.githubusercontent.com/IBM/charts/master/repo/ibm-helm
         mediaType: application/vnd.case.resource.helm.chart.v1
 ```
 
-The resolver will connect to the `repositoryURL` and retrieve or validate version 1.3.1 of the `mysql` chart.
+The resolver will connect to the `repositoryURL` and retrieve or validate version 1.3.1 of the `ibm-sch` chart.
 
 ## Helm Charts Non OLM
 Helm charts are referenced in the `helmChartsNonOLM` resource definitions section: (**Note:** Supported with ibm-pak version `v1.18.0` or higher)
@@ -169,10 +168,10 @@ resources:
   ...
   resourceDefs:
     helmChartsNonOLM:
-      - chart:  mysql
+      - chart:  ibm-sch
         version: 1.3.1
         repositoryURLs:
-          - https://kubernetes-charts.storage.googleapis.com
+          - https://raw.githubusercontent.com/IBM/charts/master/repo/ibm-helm
         mediaType: application/vnd.case.resource.helm.chart.v1
 ```
 
